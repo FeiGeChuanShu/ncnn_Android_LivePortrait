@@ -1,0 +1,211 @@
+7767517
+209 253
+Input                    input                    0 1 input
+Split                    splitncnn_input0         1 5 input input_splitncnn_0 input_splitncnn_1 input_splitncnn_2 input_splitncnn_3 input_splitncnn_4
+Convolution              /fc/Conv                 1 1 input_splitncnn_4 /fc/Conv_output_0 0=512 1=3 4=1 5=1 6=1179648
+Split                    splitncnn_0              1 2 /fc/Conv_output_0 /fc/Conv_output_0_splitncnn_0 /fc/Conv_output_0_splitncnn_1
+InstanceNorm             /G_middle_0/norm_0/param_free_norm/InstanceNormalization 1 1 /fc/Conv_output_0_splitncnn_1 /G_middle_0/norm_0/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Interp                   /G_middle_0/norm_0/Resize 1 1 input_splitncnn_3 /G_middle_0/norm_0/Resize_output_0 0=1 3=64 4=64
+Convolution              /G_middle_0/norm_0/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_0/Resize_output_0 /G_middle_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_1              1 2 /G_middle_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_0/norm_0/mlp_gamma/Conv 1 1 /G_middle_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_0/norm_0/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_0/norm_0/mlp_beta/Conv 1 1 /G_middle_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_0/norm_0/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_0/norm_0/Add   1 1 /G_middle_0/norm_0/mlp_gamma/Conv_output_0 /G_middle_0/norm_0/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_0/norm_0/Mul   2 1 /G_middle_0/norm_0/param_free_norm/InstanceNormalization_output_0 /G_middle_0/norm_0/Add_output_0 /G_middle_0/norm_0/Mul_output_0 0=2
+BinaryOp                 /G_middle_0/norm_0/Add_1 2 1 /G_middle_0/norm_0/Mul_output_0 /G_middle_0/norm_0/mlp_beta/Conv_output_0 /G_middle_0/norm_0/Add_1_output_0
+ReLU                     /G_middle_0/LeakyRelu    1 1 /G_middle_0/norm_0/Add_1_output_0 /G_middle_0/LeakyRelu_output_0 0=2.000000e-01
+Convolution              /G_middle_0/conv_0/Conv  1 1 /G_middle_0/LeakyRelu_output_0 /G_middle_0/conv_0/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+InstanceNorm             /G_middle_0/norm_1/param_free_norm/InstanceNormalization 1 1 /G_middle_0/conv_0/Conv_output_0 /G_middle_0/norm_1/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Interp                   /G_middle_0/norm_1/Resize 1 1 input_splitncnn_2 /G_middle_0/norm_1/Resize_output_0 0=1 3=64 4=64
+Split                    splitncnn_2              1 11 /G_middle_0/norm_1/Resize_output_0 /G_middle_0/norm_1/Resize_output_0_splitncnn_0 /G_middle_0/norm_1/Resize_output_0_splitncnn_1 /G_middle_0/norm_1/Resize_output_0_splitncnn_2 /G_middle_0/norm_1/Resize_output_0_splitncnn_3 /G_middle_0/norm_1/Resize_output_0_splitncnn_4 /G_middle_0/norm_1/Resize_output_0_splitncnn_5 /G_middle_0/norm_1/Resize_output_0_splitncnn_6 /G_middle_0/norm_1/Resize_output_0_splitncnn_7 /G_middle_0/norm_1/Resize_output_0_splitncnn_8 /G_middle_0/norm_1/Resize_output_0_splitncnn_9 /G_middle_0/norm_1/Resize_output_0_splitncnn_10
+Convolution              /G_middle_0/norm_1/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_10 /G_middle_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_3              1 2 /G_middle_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_0/norm_1/mlp_gamma/Conv 1 1 /G_middle_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_0/norm_1/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_0/norm_1/mlp_beta/Conv 1 1 /G_middle_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_0/norm_1/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_0/norm_1/Add   1 1 /G_middle_0/norm_1/mlp_gamma/Conv_output_0 /G_middle_0/norm_1/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_0/norm_1/Mul   2 1 /G_middle_0/norm_1/param_free_norm/InstanceNormalization_output_0 /G_middle_0/norm_1/Add_output_0 /G_middle_0/norm_1/Mul_output_0 0=2
+BinaryOp                 /G_middle_0/norm_1/Add_1 2 1 /G_middle_0/norm_1/Mul_output_0 /G_middle_0/norm_1/mlp_beta/Conv_output_0 /G_middle_0/norm_1/Add_1_output_0
+ReLU                     /G_middle_0/LeakyRelu_1  1 1 /G_middle_0/norm_1/Add_1_output_0 /G_middle_0/LeakyRelu_1_output_0 0=2.000000e-01
+Convolution              /G_middle_0/conv_1/Conv  1 1 /G_middle_0/LeakyRelu_1_output_0 /G_middle_0/conv_1/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+BinaryOp                 /G_middle_0/Add          2 1 /fc/Conv_output_0_splitncnn_0 /G_middle_0/conv_1/Conv_output_0 /G_middle_0/Add_output_0
+Split                    splitncnn_4              1 2 /G_middle_0/Add_output_0 /G_middle_0/Add_output_0_splitncnn_0 /G_middle_0/Add_output_0_splitncnn_1
+InstanceNorm             /G_middle_1/norm_0/param_free_norm/InstanceNormalization 1 1 /G_middle_0/Add_output_0_splitncnn_1 /G_middle_1/norm_0/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_1/norm_0/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_9 /G_middle_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_5              1 2 /G_middle_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_1/norm_0/mlp_gamma/Conv 1 1 /G_middle_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_1/norm_0/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_1/norm_0/mlp_beta/Conv 1 1 /G_middle_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_1/norm_0/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_1/norm_0/Add   1 1 /G_middle_1/norm_0/mlp_gamma/Conv_output_0 /G_middle_1/norm_0/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_1/norm_0/Mul   2 1 /G_middle_1/norm_0/param_free_norm/InstanceNormalization_output_0 /G_middle_1/norm_0/Add_output_0 /G_middle_1/norm_0/Mul_output_0 0=2
+BinaryOp                 /G_middle_1/norm_0/Add_1 2 1 /G_middle_1/norm_0/Mul_output_0 /G_middle_1/norm_0/mlp_beta/Conv_output_0 /G_middle_1/norm_0/Add_1_output_0
+ReLU                     /G_middle_1/LeakyRelu    1 1 /G_middle_1/norm_0/Add_1_output_0 /G_middle_1/LeakyRelu_output_0 0=2.000000e-01
+Convolution              /G_middle_1/conv_0/Conv  1 1 /G_middle_1/LeakyRelu_output_0 /G_middle_1/conv_0/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+InstanceNorm             /G_middle_1/norm_1/param_free_norm/InstanceNormalization 1 1 /G_middle_1/conv_0/Conv_output_0 /G_middle_1/norm_1/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_1/norm_1/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_8 /G_middle_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_6              1 2 /G_middle_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_1/norm_1/mlp_gamma/Conv 1 1 /G_middle_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_1/norm_1/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_1/norm_1/mlp_beta/Conv 1 1 /G_middle_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_1/norm_1/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_1/norm_1/Add   1 1 /G_middle_1/norm_1/mlp_gamma/Conv_output_0 /G_middle_1/norm_1/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_1/norm_1/Mul   2 1 /G_middle_1/norm_1/param_free_norm/InstanceNormalization_output_0 /G_middle_1/norm_1/Add_output_0 /G_middle_1/norm_1/Mul_output_0 0=2
+BinaryOp                 /G_middle_1/norm_1/Add_1 2 1 /G_middle_1/norm_1/Mul_output_0 /G_middle_1/norm_1/mlp_beta/Conv_output_0 /G_middle_1/norm_1/Add_1_output_0
+ReLU                     /G_middle_1/LeakyRelu_1  1 1 /G_middle_1/norm_1/Add_1_output_0 /G_middle_1/LeakyRelu_1_output_0 0=2.000000e-01
+Convolution              /G_middle_1/conv_1/Conv  1 1 /G_middle_1/LeakyRelu_1_output_0 /G_middle_1/conv_1/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+BinaryOp                 /G_middle_1/Add          2 1 /G_middle_0/Add_output_0_splitncnn_0 /G_middle_1/conv_1/Conv_output_0 /G_middle_1/Add_output_0
+Split                    splitncnn_7              1 2 /G_middle_1/Add_output_0 /G_middle_1/Add_output_0_splitncnn_0 /G_middle_1/Add_output_0_splitncnn_1
+InstanceNorm             /G_middle_2/norm_0/param_free_norm/InstanceNormalization 1 1 /G_middle_1/Add_output_0_splitncnn_1 /G_middle_2/norm_0/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_2/norm_0/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_7 /G_middle_2/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_8              1 2 /G_middle_2/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_2/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_2/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_2/norm_0/mlp_gamma/Conv 1 1 /G_middle_2/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_2/norm_0/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_2/norm_0/mlp_beta/Conv 1 1 /G_middle_2/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_2/norm_0/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_2/norm_0/Add   1 1 /G_middle_2/norm_0/mlp_gamma/Conv_output_0 /G_middle_2/norm_0/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_2/norm_0/Mul   2 1 /G_middle_2/norm_0/param_free_norm/InstanceNormalization_output_0 /G_middle_2/norm_0/Add_output_0 /G_middle_2/norm_0/Mul_output_0 0=2
+BinaryOp                 /G_middle_2/norm_0/Add_1 2 1 /G_middle_2/norm_0/Mul_output_0 /G_middle_2/norm_0/mlp_beta/Conv_output_0 /G_middle_2/norm_0/Add_1_output_0
+ReLU                     /G_middle_2/LeakyRelu    1 1 /G_middle_2/norm_0/Add_1_output_0 /G_middle_2/LeakyRelu_output_0 0=2.000000e-01
+Convolution              /G_middle_2/conv_0/Conv  1 1 /G_middle_2/LeakyRelu_output_0 /G_middle_2/conv_0/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+InstanceNorm             /G_middle_2/norm_1/param_free_norm/InstanceNormalization 1 1 /G_middle_2/conv_0/Conv_output_0 /G_middle_2/norm_1/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_2/norm_1/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_6 /G_middle_2/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_9              1 2 /G_middle_2/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_2/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_2/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_2/norm_1/mlp_gamma/Conv 1 1 /G_middle_2/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_2/norm_1/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_2/norm_1/mlp_beta/Conv 1 1 /G_middle_2/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_2/norm_1/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_2/norm_1/Add   1 1 /G_middle_2/norm_1/mlp_gamma/Conv_output_0 /G_middle_2/norm_1/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_2/norm_1/Mul   2 1 /G_middle_2/norm_1/param_free_norm/InstanceNormalization_output_0 /G_middle_2/norm_1/Add_output_0 /G_middle_2/norm_1/Mul_output_0 0=2
+BinaryOp                 /G_middle_2/norm_1/Add_1 2 1 /G_middle_2/norm_1/Mul_output_0 /G_middle_2/norm_1/mlp_beta/Conv_output_0 /G_middle_2/norm_1/Add_1_output_0
+ReLU                     /G_middle_2/LeakyRelu_1  1 1 /G_middle_2/norm_1/Add_1_output_0 /G_middle_2/LeakyRelu_1_output_0 0=2.000000e-01
+Convolution              /G_middle_2/conv_1/Conv  1 1 /G_middle_2/LeakyRelu_1_output_0 /G_middle_2/conv_1/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+BinaryOp                 /G_middle_2/Add          2 1 /G_middle_1/Add_output_0_splitncnn_0 /G_middle_2/conv_1/Conv_output_0 /G_middle_2/Add_output_0
+Split                    splitncnn_10             1 2 /G_middle_2/Add_output_0 /G_middle_2/Add_output_0_splitncnn_0 /G_middle_2/Add_output_0_splitncnn_1
+InstanceNorm             /G_middle_3/norm_0/param_free_norm/InstanceNormalization 1 1 /G_middle_2/Add_output_0_splitncnn_1 /G_middle_3/norm_0/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_3/norm_0/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_5 /G_middle_3/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_11             1 2 /G_middle_3/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_3/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_3/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_3/norm_0/mlp_gamma/Conv 1 1 /G_middle_3/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_3/norm_0/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_3/norm_0/mlp_beta/Conv 1 1 /G_middle_3/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_3/norm_0/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_3/norm_0/Add   1 1 /G_middle_3/norm_0/mlp_gamma/Conv_output_0 /G_middle_3/norm_0/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_3/norm_0/Mul   2 1 /G_middle_3/norm_0/param_free_norm/InstanceNormalization_output_0 /G_middle_3/norm_0/Add_output_0 /G_middle_3/norm_0/Mul_output_0 0=2
+BinaryOp                 /G_middle_3/norm_0/Add_1 2 1 /G_middle_3/norm_0/Mul_output_0 /G_middle_3/norm_0/mlp_beta/Conv_output_0 /G_middle_3/norm_0/Add_1_output_0
+ReLU                     /G_middle_3/LeakyRelu    1 1 /G_middle_3/norm_0/Add_1_output_0 /G_middle_3/LeakyRelu_output_0 0=2.000000e-01
+Convolution              /G_middle_3/conv_0/Conv  1 1 /G_middle_3/LeakyRelu_output_0 /G_middle_3/conv_0/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+InstanceNorm             /G_middle_3/norm_1/param_free_norm/InstanceNormalization 1 1 /G_middle_3/conv_0/Conv_output_0 /G_middle_3/norm_1/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_3/norm_1/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_4 /G_middle_3/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_12             1 2 /G_middle_3/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_3/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_3/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_3/norm_1/mlp_gamma/Conv 1 1 /G_middle_3/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_3/norm_1/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_3/norm_1/mlp_beta/Conv 1 1 /G_middle_3/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_3/norm_1/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_3/norm_1/Add   1 1 /G_middle_3/norm_1/mlp_gamma/Conv_output_0 /G_middle_3/norm_1/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_3/norm_1/Mul   2 1 /G_middle_3/norm_1/param_free_norm/InstanceNormalization_output_0 /G_middle_3/norm_1/Add_output_0 /G_middle_3/norm_1/Mul_output_0 0=2
+BinaryOp                 /G_middle_3/norm_1/Add_1 2 1 /G_middle_3/norm_1/Mul_output_0 /G_middle_3/norm_1/mlp_beta/Conv_output_0 /G_middle_3/norm_1/Add_1_output_0
+ReLU                     /G_middle_3/LeakyRelu_1  1 1 /G_middle_3/norm_1/Add_1_output_0 /G_middle_3/LeakyRelu_1_output_0 0=2.000000e-01
+Convolution              /G_middle_3/conv_1/Conv  1 1 /G_middle_3/LeakyRelu_1_output_0 /G_middle_3/conv_1/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+BinaryOp                 /G_middle_3/Add          2 1 /G_middle_2/Add_output_0_splitncnn_0 /G_middle_3/conv_1/Conv_output_0 /G_middle_3/Add_output_0
+Split                    splitncnn_13             1 2 /G_middle_3/Add_output_0 /G_middle_3/Add_output_0_splitncnn_0 /G_middle_3/Add_output_0_splitncnn_1
+InstanceNorm             /G_middle_4/norm_0/param_free_norm/InstanceNormalization 1 1 /G_middle_3/Add_output_0_splitncnn_1 /G_middle_4/norm_0/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_4/norm_0/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_3 /G_middle_4/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_14             1 2 /G_middle_4/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_4/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_4/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_4/norm_0/mlp_gamma/Conv 1 1 /G_middle_4/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_4/norm_0/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_4/norm_0/mlp_beta/Conv 1 1 /G_middle_4/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_4/norm_0/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_4/norm_0/Add   1 1 /G_middle_4/norm_0/mlp_gamma/Conv_output_0 /G_middle_4/norm_0/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_4/norm_0/Mul   2 1 /G_middle_4/norm_0/param_free_norm/InstanceNormalization_output_0 /G_middle_4/norm_0/Add_output_0 /G_middle_4/norm_0/Mul_output_0 0=2
+BinaryOp                 /G_middle_4/norm_0/Add_1 2 1 /G_middle_4/norm_0/Mul_output_0 /G_middle_4/norm_0/mlp_beta/Conv_output_0 /G_middle_4/norm_0/Add_1_output_0
+ReLU                     /G_middle_4/LeakyRelu    1 1 /G_middle_4/norm_0/Add_1_output_0 /G_middle_4/LeakyRelu_output_0 0=2.000000e-01
+Convolution              /G_middle_4/conv_0/Conv  1 1 /G_middle_4/LeakyRelu_output_0 /G_middle_4/conv_0/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+InstanceNorm             /G_middle_4/norm_1/param_free_norm/InstanceNormalization 1 1 /G_middle_4/conv_0/Conv_output_0 /G_middle_4/norm_1/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_4/norm_1/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_2 /G_middle_4/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_15             1 2 /G_middle_4/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_4/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_4/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_4/norm_1/mlp_gamma/Conv 1 1 /G_middle_4/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_4/norm_1/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_4/norm_1/mlp_beta/Conv 1 1 /G_middle_4/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_4/norm_1/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_4/norm_1/Add   1 1 /G_middle_4/norm_1/mlp_gamma/Conv_output_0 /G_middle_4/norm_1/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_4/norm_1/Mul   2 1 /G_middle_4/norm_1/param_free_norm/InstanceNormalization_output_0 /G_middle_4/norm_1/Add_output_0 /G_middle_4/norm_1/Mul_output_0 0=2
+BinaryOp                 /G_middle_4/norm_1/Add_1 2 1 /G_middle_4/norm_1/Mul_output_0 /G_middle_4/norm_1/mlp_beta/Conv_output_0 /G_middle_4/norm_1/Add_1_output_0
+ReLU                     /G_middle_4/LeakyRelu_1  1 1 /G_middle_4/norm_1/Add_1_output_0 /G_middle_4/LeakyRelu_1_output_0 0=2.000000e-01
+Convolution              /G_middle_4/conv_1/Conv  1 1 /G_middle_4/LeakyRelu_1_output_0 /G_middle_4/conv_1/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+BinaryOp                 /G_middle_4/Add          2 1 /G_middle_3/Add_output_0_splitncnn_0 /G_middle_4/conv_1/Conv_output_0 /G_middle_4/Add_output_0
+Split                    splitncnn_16             1 2 /G_middle_4/Add_output_0 /G_middle_4/Add_output_0_splitncnn_0 /G_middle_4/Add_output_0_splitncnn_1
+InstanceNorm             /G_middle_5/norm_0/param_free_norm/InstanceNormalization 1 1 /G_middle_4/Add_output_0_splitncnn_1 /G_middle_5/norm_0/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_5/norm_0/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_1 /G_middle_5/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_17             1 2 /G_middle_5/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_5/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_5/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_5/norm_0/mlp_gamma/Conv 1 1 /G_middle_5/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_5/norm_0/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_5/norm_0/mlp_beta/Conv 1 1 /G_middle_5/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_5/norm_0/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_5/norm_0/Add   1 1 /G_middle_5/norm_0/mlp_gamma/Conv_output_0 /G_middle_5/norm_0/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_5/norm_0/Mul   2 1 /G_middle_5/norm_0/param_free_norm/InstanceNormalization_output_0 /G_middle_5/norm_0/Add_output_0 /G_middle_5/norm_0/Mul_output_0 0=2
+BinaryOp                 /G_middle_5/norm_0/Add_1 2 1 /G_middle_5/norm_0/Mul_output_0 /G_middle_5/norm_0/mlp_beta/Conv_output_0 /G_middle_5/norm_0/Add_1_output_0
+ReLU                     /G_middle_5/LeakyRelu    1 1 /G_middle_5/norm_0/Add_1_output_0 /G_middle_5/LeakyRelu_output_0 0=2.000000e-01
+Convolution              /G_middle_5/conv_0/Conv  1 1 /G_middle_5/LeakyRelu_output_0 /G_middle_5/conv_0/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+InstanceNorm             /G_middle_5/norm_1/param_free_norm/InstanceNormalization 1 1 /G_middle_5/conv_0/Conv_output_0 /G_middle_5/norm_1/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Convolution              /G_middle_5/norm_1/mlp_shared/mlp_shared.0/Conv 1 1 /G_middle_0/norm_1/Resize_output_0_splitncnn_0 /G_middle_5/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_18             1 2 /G_middle_5/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 /G_middle_5/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_5/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /G_middle_5/norm_1/mlp_gamma/Conv 1 1 /G_middle_5/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /G_middle_5/norm_1/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /G_middle_5/norm_1/mlp_beta/Conv 1 1 /G_middle_5/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /G_middle_5/norm_1/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /G_middle_5/norm_1/Add   1 1 /G_middle_5/norm_1/mlp_gamma/Conv_output_0 /G_middle_5/norm_1/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /G_middle_5/norm_1/Mul   2 1 /G_middle_5/norm_1/param_free_norm/InstanceNormalization_output_0 /G_middle_5/norm_1/Add_output_0 /G_middle_5/norm_1/Mul_output_0 0=2
+BinaryOp                 /G_middle_5/norm_1/Add_1 2 1 /G_middle_5/norm_1/Mul_output_0 /G_middle_5/norm_1/mlp_beta/Conv_output_0 /G_middle_5/norm_1/Add_1_output_0
+ReLU                     /G_middle_5/LeakyRelu_1  1 1 /G_middle_5/norm_1/Add_1_output_0 /G_middle_5/LeakyRelu_1_output_0 0=2.000000e-01
+Convolution              /G_middle_5/conv_1/Conv  1 1 /G_middle_5/LeakyRelu_1_output_0 /G_middle_5/conv_1/Conv_output_0 0=512 1=3 4=1 5=1 6=2359296
+BinaryOp                 /G_middle_5/Add          2 1 /G_middle_4/Add_output_0_splitncnn_0 /G_middle_5/conv_1/Conv_output_0 /G_middle_5/Add_output_0
+Interp                   /up/Resize               1 1 /G_middle_5/Add_output_0 /up/Resize_output_0 0=1 1=2.000000e+00 2=2.000000e+00
+InstanceNorm             /up_0/norm_s/param_free_norm/InstanceNormalization 1 1 /up/Resize_output_0 /up_0/norm_s/param_free_norm/InstanceNormalization_output_0 0=512 1=1.000000e-05 2=0
+Split                    splitncnn_19             1 2 /up_0/norm_s/param_free_norm/InstanceNormalization_output_0 /up_0/norm_s/param_free_norm/InstanceNormalization_output_0_splitncnn_0 /up_0/norm_s/param_free_norm/InstanceNormalization_output_0_splitncnn_1
+Interp                   /up_0/norm_s/Resize      1 1 input_splitncnn_1 /up_0/norm_s/Resize_output_0 0=1 3=128 4=128
+Split                    splitncnn_20             1 3 /up_0/norm_s/Resize_output_0 /up_0/norm_s/Resize_output_0_splitncnn_0 /up_0/norm_s/Resize_output_0_splitncnn_1 /up_0/norm_s/Resize_output_0_splitncnn_2
+Convolution              /up_0/norm_s/mlp_shared/mlp_shared.0/Conv 1 1 /up_0/norm_s/Resize_output_0_splitncnn_2 /up_0/norm_s/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_21             1 2 /up_0/norm_s/mlp_shared/mlp_shared.1/Relu_output_0 /up_0/norm_s/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_0/norm_s/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /up_0/norm_s/mlp_gamma/Conv 1 1 /up_0/norm_s/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /up_0/norm_s/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /up_0/norm_s/mlp_beta/Conv 1 1 /up_0/norm_s/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_0/norm_s/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /up_0/norm_s/Add         1 1 /up_0/norm_s/mlp_gamma/Conv_output_0 /up_0/norm_s/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /up_0/norm_s/Mul         2 1 /up_0/norm_s/param_free_norm/InstanceNormalization_output_0_splitncnn_1 /up_0/norm_s/Add_output_0 /up_0/norm_s/Mul_output_0 0=2
+BinaryOp                 /up_0/norm_s/Add_1       2 1 /up_0/norm_s/Mul_output_0 /up_0/norm_s/mlp_beta/Conv_output_0 /up_0/norm_s/Add_1_output_0
+Convolution              /up_0/conv_s/Conv        1 1 /up_0/norm_s/Add_1_output_0 /up_0/conv_s/Conv_output_0 0=256 1=1 6=131072
+Convolution              /up_0/norm_0/mlp_shared/mlp_shared.0/Conv 1 1 /up_0/norm_s/Resize_output_0_splitncnn_1 /up_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_22             1 2 /up_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 /up_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /up_0/norm_0/mlp_gamma/Conv 1 1 /up_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /up_0/norm_0/mlp_gamma/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+Convolution              /up_0/norm_0/mlp_beta/Conv 1 1 /up_0/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_0/norm_0/mlp_beta/Conv_output_0 0=512 1=3 4=1 5=1 6=589824
+BinaryOp                 /up_0/norm_0/Add         1 1 /up_0/norm_0/mlp_gamma/Conv_output_0 /up_0/norm_0/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /up_0/norm_0/Mul         2 1 /up_0/norm_s/param_free_norm/InstanceNormalization_output_0_splitncnn_0 /up_0/norm_0/Add_output_0 /up_0/norm_0/Mul_output_0 0=2
+BinaryOp                 /up_0/norm_0/Add_1       2 1 /up_0/norm_0/Mul_output_0 /up_0/norm_0/mlp_beta/Conv_output_0 /up_0/norm_0/Add_1_output_0
+ReLU                     /up_0/LeakyRelu          1 1 /up_0/norm_0/Add_1_output_0 /up_0/LeakyRelu_output_0 0=2.000000e-01
+Convolution              /up_0/conv_0/Conv        1 1 /up_0/LeakyRelu_output_0 /up_0/conv_0/Conv_output_0 0=256 1=3 4=1 5=1 6=1179648
+InstanceNorm             /up_0/norm_1/param_free_norm/InstanceNormalization 1 1 /up_0/conv_0/Conv_output_0 /up_0/norm_1/param_free_norm/InstanceNormalization_output_0 0=256 1=1.000000e-05 2=0
+Convolution              /up_0/norm_1/mlp_shared/mlp_shared.0/Conv 1 1 /up_0/norm_s/Resize_output_0_splitncnn_0 /up_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_23             1 2 /up_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 /up_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /up_0/norm_1/mlp_gamma/Conv 1 1 /up_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /up_0/norm_1/mlp_gamma/Conv_output_0 0=256 1=3 4=1 5=1 6=294912
+Convolution              /up_0/norm_1/mlp_beta/Conv 1 1 /up_0/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_0/norm_1/mlp_beta/Conv_output_0 0=256 1=3 4=1 5=1 6=294912
+BinaryOp                 /up_0/norm_1/Add         1 1 /up_0/norm_1/mlp_gamma/Conv_output_0 /up_0/norm_1/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /up_0/norm_1/Mul         2 1 /up_0/norm_1/param_free_norm/InstanceNormalization_output_0 /up_0/norm_1/Add_output_0 /up_0/norm_1/Mul_output_0 0=2
+BinaryOp                 /up_0/norm_1/Add_1       2 1 /up_0/norm_1/Mul_output_0 /up_0/norm_1/mlp_beta/Conv_output_0 /up_0/norm_1/Add_1_output_0
+ReLU                     /up_0/LeakyRelu_1        1 1 /up_0/norm_1/Add_1_output_0 /up_0/LeakyRelu_1_output_0 0=2.000000e-01
+Convolution              /up_0/conv_1/Conv        1 1 /up_0/LeakyRelu_1_output_0 /up_0/conv_1/Conv_output_0 0=256 1=3 4=1 5=1 6=589824
+BinaryOp                 /up_0/Add                2 1 /up_0/conv_s/Conv_output_0 /up_0/conv_1/Conv_output_0 /up_0/Add_output_0
+Interp                   /up_1/Resize             1 1 /up_0/Add_output_0 /up_1/Resize_output_0 0=1 1=2.000000e+00 2=2.000000e+00
+InstanceNorm             /up_1/norm_s/param_free_norm/InstanceNormalization 1 1 /up_1/Resize_output_0 /up_1/norm_s/param_free_norm/InstanceNormalization_output_0 0=256 1=1.000000e-05 2=0
+Split                    splitncnn_24             1 2 /up_1/norm_s/param_free_norm/InstanceNormalization_output_0 /up_1/norm_s/param_free_norm/InstanceNormalization_output_0_splitncnn_0 /up_1/norm_s/param_free_norm/InstanceNormalization_output_0_splitncnn_1
+Interp                   /up_1/norm_s/Resize      1 1 input_splitncnn_0 /up_1/norm_s/Resize_output_0 0=1 3=256 4=256
+Split                    splitncnn_25             1 3 /up_1/norm_s/Resize_output_0 /up_1/norm_s/Resize_output_0_splitncnn_0 /up_1/norm_s/Resize_output_0_splitncnn_1 /up_1/norm_s/Resize_output_0_splitncnn_2
+Convolution              /up_1/norm_s/mlp_shared/mlp_shared.0/Conv 1 1 /up_1/norm_s/Resize_output_0_splitncnn_2 /up_1/norm_s/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_26             1 2 /up_1/norm_s/mlp_shared/mlp_shared.1/Relu_output_0 /up_1/norm_s/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_1/norm_s/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /up_1/norm_s/mlp_gamma/Conv 1 1 /up_1/norm_s/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /up_1/norm_s/mlp_gamma/Conv_output_0 0=256 1=3 4=1 5=1 6=294912
+Convolution              /up_1/norm_s/mlp_beta/Conv 1 1 /up_1/norm_s/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_1/norm_s/mlp_beta/Conv_output_0 0=256 1=3 4=1 5=1 6=294912
+BinaryOp                 /up_1/norm_s/Add         1 1 /up_1/norm_s/mlp_gamma/Conv_output_0 /up_1/norm_s/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /up_1/norm_s/Mul         2 1 /up_1/norm_s/param_free_norm/InstanceNormalization_output_0_splitncnn_1 /up_1/norm_s/Add_output_0 /up_1/norm_s/Mul_output_0 0=2
+BinaryOp                 /up_1/norm_s/Add_1       2 1 /up_1/norm_s/Mul_output_0 /up_1/norm_s/mlp_beta/Conv_output_0 /up_1/norm_s/Add_1_output_0
+Convolution              /up_1/conv_s/Conv        1 1 /up_1/norm_s/Add_1_output_0 /up_1/conv_s/Conv_output_0 0=64 1=1 6=16384
+Convolution              /up_1/norm_0/mlp_shared/mlp_shared.0/Conv 1 1 /up_1/norm_s/Resize_output_0_splitncnn_1 /up_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_27             1 2 /up_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0 /up_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /up_1/norm_0/mlp_gamma/Conv 1 1 /up_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /up_1/norm_0/mlp_gamma/Conv_output_0 0=256 1=3 4=1 5=1 6=294912
+Convolution              /up_1/norm_0/mlp_beta/Conv 1 1 /up_1/norm_0/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_1/norm_0/mlp_beta/Conv_output_0 0=256 1=3 4=1 5=1 6=294912
+BinaryOp                 /up_1/norm_0/Add         1 1 /up_1/norm_0/mlp_gamma/Conv_output_0 /up_1/norm_0/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /up_1/norm_0/Mul         2 1 /up_1/norm_s/param_free_norm/InstanceNormalization_output_0_splitncnn_0 /up_1/norm_0/Add_output_0 /up_1/norm_0/Mul_output_0 0=2
+BinaryOp                 /up_1/norm_0/Add_1       2 1 /up_1/norm_0/Mul_output_0 /up_1/norm_0/mlp_beta/Conv_output_0 /up_1/norm_0/Add_1_output_0
+ReLU                     /up_1/LeakyRelu          1 1 /up_1/norm_0/Add_1_output_0 /up_1/LeakyRelu_output_0 0=2.000000e-01
+Convolution              /up_1/conv_0/Conv        1 1 /up_1/LeakyRelu_output_0 /up_1/conv_0/Conv_output_0 0=64 1=3 4=1 5=1 6=147456
+InstanceNorm             /up_1/norm_1/param_free_norm/InstanceNormalization 1 1 /up_1/conv_0/Conv_output_0 /up_1/norm_1/param_free_norm/InstanceNormalization_output_0 0=64 1=1.000000e-05 2=0
+Convolution              /up_1/norm_1/mlp_shared/mlp_shared.0/Conv 1 1 /up_1/norm_s/Resize_output_0_splitncnn_0 /up_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 0=128 1=3 4=1 5=1 6=294912 9=1
+Split                    splitncnn_28             1 2 /up_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0 /up_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1
+Convolution              /up_1/norm_1/mlp_gamma/Conv 1 1 /up_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_1 /up_1/norm_1/mlp_gamma/Conv_output_0 0=64 1=3 4=1 5=1 6=73728
+Convolution              /up_1/norm_1/mlp_beta/Conv 1 1 /up_1/norm_1/mlp_shared/mlp_shared.1/Relu_output_0_splitncnn_0 /up_1/norm_1/mlp_beta/Conv_output_0 0=64 1=3 4=1 5=1 6=73728
+BinaryOp                 /up_1/norm_1/Add         1 1 /up_1/norm_1/mlp_gamma/Conv_output_0 /up_1/norm_1/Add_output_0 1=1 2=1.000000e+00
+BinaryOp                 /up_1/norm_1/Mul         2 1 /up_1/norm_1/param_free_norm/InstanceNormalization_output_0 /up_1/norm_1/Add_output_0 /up_1/norm_1/Mul_output_0 0=2
+BinaryOp                 /up_1/norm_1/Add_1       2 1 /up_1/norm_1/Mul_output_0 /up_1/norm_1/mlp_beta/Conv_output_0 /up_1/norm_1/Add_1_output_0
+ReLU                     /up_1/LeakyRelu_1        1 1 /up_1/norm_1/Add_1_output_0 /up_1/LeakyRelu_1_output_0 0=2.000000e-01
+Convolution              /up_1/conv_1/Conv        1 1 /up_1/LeakyRelu_1_output_0 /up_1/conv_1/Conv_output_0 0=64 1=3 4=1 5=1 6=36864
+BinaryOp                 /up_1/Add                2 1 /up_1/conv_s/Conv_output_0 /up_1/conv_1/Conv_output_0 /up_1/Add_output_0
+ReLU                     /LeakyRelu               1 1 /up_1/Add_output_0 /LeakyRelu_output_0 0=2.000000e-01
+Convolution              /conv_img/conv_img.0/Conv 1 1 /LeakyRelu_output_0 /conv_img/conv_img.0/Conv_output_0 0=12 1=3 4=1 5=1 6=6912
+PixelShuffle             /conv_img/conv_img.1/DepthToSpace 1 1 /conv_img/conv_img.0/Conv_output_0 /conv_img/conv_img.1/DepthToSpace_output_0 0=2
+Sigmoid                  /Sigmoid                 1 1 /conv_img/conv_img.1/DepthToSpace_output_0 output1
+Permute                  permute_40               1 1 output1 output 0=3

@@ -1,0 +1,9 @@
+7767517
+7 7
+Input                    input                    0 1 input
+InnerProduct             /mlp/mlp.0/Gemm          1 1 input /mlp/mlp.1/Relu_output_0 0=256 1=1 2=16896 9=1
+InnerProduct             /mlp/mlp.2/Gemm          1 1 /mlp/mlp.1/Relu_output_0 /mlp/mlp.3/Relu_output_0 0=256 1=1 2=65536 9=1
+InnerProduct             /mlp/mlp.4/Gemm          1 1 /mlp/mlp.3/Relu_output_0 /mlp/mlp.5/Relu_output_0 0=128 1=1 2=32768 9=1
+InnerProduct             /mlp/mlp.6/Gemm          1 1 /mlp/mlp.5/Relu_output_0 /mlp/mlp.7/Relu_output_0 0=128 1=1 2=16384 9=1
+InnerProduct             /mlp/mlp.8/Gemm          1 1 /mlp/mlp.7/Relu_output_0 /mlp/mlp.9/Relu_output_0 0=64 1=1 2=8192 9=1
+InnerProduct             /mlp/mlp.10/Gemm         1 1 /mlp/mlp.9/Relu_output_0 output 0=63 1=1 2=4032

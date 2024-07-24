@@ -1,0 +1,482 @@
+7767517
+480 558
+Input                    in0                      0 1 in0
+Convolution              conv_36                  1 1 in0 1 0=96 1=4 11=4 12=1 13=4 14=0 2=1 3=4 4=0 5=1 6=4608
+Permute                  permute_88               1 1 1 2 0=3
+LayerNorm                ln_58                    1 1 2 3 0=96 1=1.000000e-06 2=1
+Permute                  permute_89               1 1 3 4 0=4
+Split                    splitncnn_0              1 2 4 5 6
+ConvolutionDepthWise     convdw_241               1 1 6 7 0=96 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=4704 7=96
+Permute                  permute_90               1 1 7 8 0=3
+LayerNorm                ln_59                    1 1 8 9 0=96 1=1.000000e-06 2=1
+Reshape                  reshape_132              1 1 9 10 0=96 1=4096
+Gemm                     gemm_0                   1 1 10 11 10=4 2=0 3=1 4=0 5=1 6=1 7=4096 8=384 9=96
+Reshape                  reshape_133              1 1 11 12 0=384 1=64 2=64
+GELU                     gelu_40                  1 1 12 13
+Split                    splitncnn_1              1 3 13 14 15 16
+MemoryData               detector.stages.0.0.grn  0 1 17 0=384 1=1 2=1
+MemoryData               pnnx_unique_2            0 1 18 0=384 1=1 2=1
+Reduction                norm_223                 1 1 16 19 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_2              1 2 19 20 21
+Reduction                mean_204                 1 1 21 22 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_0                    1 1 22 23 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_1                    2 1 20 23 24 0=3
+BinaryOp                 mul_2                    2 1 14 24 25 0=2
+BinaryOp                 mul_3                    2 1 18 25 26 0=2
+BinaryOp                 add_4                    2 1 26 17 27 0=0
+BinaryOp                 add_5                    2 1 27 15 28 0=0
+Reshape                  reshape_134              1 1 28 29 0=384 1=4096
+Gemm                     gemm_1                   1 1 29 30 10=4 2=0 3=1 4=0 5=1 6=1 7=4096 8=96 9=384
+Reshape                  reshape_135              1 1 30 31 0=96 1=64 2=64
+Permute                  permute_91               1 1 31 32 0=4
+BinaryOp                 add_6                    2 1 5 32 33 0=0
+Split                    splitncnn_3              1 2 33 34 35
+ConvolutionDepthWise     convdw_242               1 1 35 36 0=96 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=4704 7=96
+Permute                  permute_92               1 1 36 37 0=3
+LayerNorm                ln_60                    1 1 37 38 0=96 1=1.000000e-06 2=1
+Reshape                  reshape_136              1 1 38 39 0=96 1=4096
+Gemm                     gemm_2                   1 1 39 40 10=4 2=0 3=1 4=0 5=1 6=1 7=4096 8=384 9=96
+Reshape                  reshape_137              1 1 40 41 0=384 1=64 2=64
+GELU                     gelu_41                  1 1 41 42
+Split                    splitncnn_4              1 3 42 43 44 45
+MemoryData               detector.stages.0.1.grn  0 1 46 0=384 1=1 2=1
+MemoryData               pnnx_unique_4            0 1 47 0=384 1=1 2=1
+Reduction                norm_224                 1 1 45 48 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_5              1 2 48 49 50
+Reduction                mean_205                 1 1 50 51 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_7                    1 1 51 52 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_8                    2 1 49 52 53 0=3
+BinaryOp                 mul_9                    2 1 43 53 54 0=2
+BinaryOp                 mul_10                   2 1 47 54 55 0=2
+BinaryOp                 add_11                   2 1 55 46 56 0=0
+BinaryOp                 add_12                   2 1 56 44 57 0=0
+Reshape                  reshape_138              1 1 57 58 0=384 1=4096
+Gemm                     gemm_3                   1 1 58 59 10=4 2=0 3=1 4=0 5=1 6=1 7=4096 8=96 9=384
+Reshape                  reshape_139              1 1 59 60 0=96 1=64 2=64
+Permute                  permute_93               1 1 60 61 0=4
+BinaryOp                 add_13                   2 1 34 61 62 0=0
+Split                    splitncnn_6              1 2 62 63 64
+ConvolutionDepthWise     convdw_243               1 1 64 65 0=96 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=4704 7=96
+Permute                  permute_94               1 1 65 66 0=3
+LayerNorm                ln_61                    1 1 66 67 0=96 1=1.000000e-06 2=1
+Reshape                  reshape_140              1 1 67 68 0=96 1=4096
+Gemm                     gemm_4                   1 1 68 69 10=4 2=0 3=1 4=0 5=1 6=1 7=4096 8=384 9=96
+Reshape                  reshape_141              1 1 69 70 0=384 1=64 2=64
+GELU                     gelu_42                  1 1 70 71
+Split                    splitncnn_7              1 3 71 72 73 74
+MemoryData               detector.stages.0.2.grn  0 1 75 0=384 1=1 2=1
+MemoryData               pnnx_unique_6            0 1 76 0=384 1=1 2=1
+Reduction                norm_225                 1 1 74 77 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_8              1 2 77 78 79
+Reduction                mean_206                 1 1 79 80 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_14                   1 1 80 81 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_15                   2 1 78 81 82 0=3
+BinaryOp                 mul_16                   2 1 72 82 83 0=2
+BinaryOp                 mul_17                   2 1 76 83 84 0=2
+BinaryOp                 add_18                   2 1 84 75 85 0=0
+BinaryOp                 add_19                   2 1 85 73 86 0=0
+Reshape                  reshape_142              1 1 86 87 0=384 1=4096
+Gemm                     gemm_5                   1 1 87 88 10=4 2=0 3=1 4=0 5=1 6=1 7=4096 8=96 9=384
+Reshape                  reshape_143              1 1 88 89 0=96 1=64 2=64
+Permute                  permute_95               1 1 89 90 0=4
+BinaryOp                 add_20                   2 1 63 90 91 0=0
+Permute                  permute_96               1 1 91 92 0=3
+LayerNorm                ln_62                    1 1 92 93 0=96 1=1.000000e-06 2=1
+Permute                  permute_97               1 1 93 94 0=4
+Convolution              conv_37                  1 1 94 95 0=192 1=2 11=2 12=1 13=2 14=0 2=1 3=2 4=0 5=1 6=73728
+Split                    splitncnn_9              1 2 95 96 97
+ConvolutionDepthWise     convdw_244               1 1 97 98 0=192 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=9408 7=192
+Permute                  permute_98               1 1 98 99 0=3
+LayerNorm                ln_63                    1 1 99 100 0=192 1=1.000000e-06 2=1
+Reshape                  reshape_144              1 1 100 101 0=192 1=1024
+Gemm                     gemm_6                   1 1 101 102 10=4 2=0 3=1 4=0 5=1 6=1 7=1024 8=768 9=192
+Reshape                  reshape_145              1 1 102 103 0=768 1=32 2=32
+GELU                     gelu_43                  1 1 103 104
+Split                    splitncnn_10             1 3 104 105 106 107
+MemoryData               detector.stages.1.0.grn  0 1 108 0=768 1=1 2=1
+MemoryData               pnnx_unique_9            0 1 109 0=768 1=1 2=1
+Reduction                norm_226                 1 1 107 110 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_11             1 2 110 111 112
+Reduction                mean_207                 1 1 112 113 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_21                   1 1 113 114 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_22                   2 1 111 114 115 0=3
+BinaryOp                 mul_23                   2 1 105 115 116 0=2
+BinaryOp                 mul_24                   2 1 109 116 117 0=2
+BinaryOp                 add_25                   2 1 117 108 118 0=0
+BinaryOp                 add_26                   2 1 118 106 119 0=0
+Reshape                  reshape_146              1 1 119 120 0=768 1=1024
+Gemm                     gemm_7                   1 1 120 121 10=4 2=0 3=1 4=0 5=1 6=1 7=1024 8=192 9=768
+Reshape                  reshape_147              1 1 121 122 0=192 1=32 2=32
+Permute                  permute_99               1 1 122 123 0=4
+BinaryOp                 add_27                   2 1 96 123 124 0=0
+Split                    splitncnn_12             1 2 124 125 126
+ConvolutionDepthWise     convdw_245               1 1 126 127 0=192 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=9408 7=192
+Permute                  permute_100              1 1 127 128 0=3
+LayerNorm                ln_64                    1 1 128 129 0=192 1=1.000000e-06 2=1
+Reshape                  reshape_148              1 1 129 130 0=192 1=1024
+Gemm                     gemm_8                   1 1 130 131 10=4 2=0 3=1 4=0 5=1 6=1 7=1024 8=768 9=192
+Reshape                  reshape_149              1 1 131 132 0=768 1=32 2=32
+GELU                     gelu_44                  1 1 132 133
+Split                    splitncnn_13             1 3 133 134 135 136
+MemoryData               detector.stages.1.1.grn  0 1 137 0=768 1=1 2=1
+MemoryData               pnnx_unique_11           0 1 138 0=768 1=1 2=1
+Reduction                norm_227                 1 1 136 139 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_14             1 2 139 140 141
+Reduction                mean_208                 1 1 141 142 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_28                   1 1 142 143 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_29                   2 1 140 143 144 0=3
+BinaryOp                 mul_30                   2 1 134 144 145 0=2
+BinaryOp                 mul_31                   2 1 138 145 146 0=2
+BinaryOp                 add_32                   2 1 146 137 147 0=0
+BinaryOp                 add_33                   2 1 147 135 148 0=0
+Reshape                  reshape_150              1 1 148 149 0=768 1=1024
+Gemm                     gemm_9                   1 1 149 150 10=4 2=0 3=1 4=0 5=1 6=1 7=1024 8=192 9=768
+Reshape                  reshape_151              1 1 150 151 0=192 1=32 2=32
+Permute                  permute_101              1 1 151 152 0=4
+BinaryOp                 add_34                   2 1 125 152 153 0=0
+Split                    splitncnn_15             1 2 153 154 155
+ConvolutionDepthWise     convdw_246               1 1 155 156 0=192 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=9408 7=192
+Permute                  permute_102              1 1 156 157 0=3
+LayerNorm                ln_65                    1 1 157 158 0=192 1=1.000000e-06 2=1
+Reshape                  reshape_152              1 1 158 159 0=192 1=1024
+Gemm                     gemm_10                  1 1 159 160 10=4 2=0 3=1 4=0 5=1 6=1 7=1024 8=768 9=192
+Reshape                  reshape_153              1 1 160 161 0=768 1=32 2=32
+GELU                     gelu_45                  1 1 161 162
+Split                    splitncnn_16             1 3 162 163 164 165
+MemoryData               detector.stages.1.2.grn  0 1 166 0=768 1=1 2=1
+MemoryData               pnnx_unique_13           0 1 167 0=768 1=1 2=1
+Reduction                norm_228                 1 1 165 168 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_17             1 2 168 169 170
+Reduction                mean_209                 1 1 170 171 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_35                   1 1 171 172 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_36                   2 1 169 172 173 0=3
+BinaryOp                 mul_37                   2 1 163 173 174 0=2
+BinaryOp                 mul_38                   2 1 167 174 175 0=2
+BinaryOp                 add_39                   2 1 175 166 176 0=0
+BinaryOp                 add_40                   2 1 176 164 177 0=0
+Reshape                  reshape_154              1 1 177 178 0=768 1=1024
+Gemm                     gemm_11                  1 1 178 179 10=4 2=0 3=1 4=0 5=1 6=1 7=1024 8=192 9=768
+Reshape                  reshape_155              1 1 179 180 0=192 1=32 2=32
+Permute                  permute_103              1 1 180 181 0=4
+BinaryOp                 add_41                   2 1 154 181 182 0=0
+Permute                  permute_104              1 1 182 183 0=3
+LayerNorm                ln_66                    1 1 183 184 0=192 1=1.000000e-06 2=1
+Permute                  permute_105              1 1 184 185 0=4
+Convolution              conv_38                  1 1 185 186 0=384 1=2 11=2 12=1 13=2 14=0 2=1 3=2 4=0 5=1 6=294912
+Split                    splitncnn_18             1 2 186 187 188
+ConvolutionDepthWise     convdw_247               1 1 188 189 0=384 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=18816 7=384
+Permute                  permute_106              1 1 189 190 0=3
+LayerNorm                ln_67                    1 1 190 191 0=384 1=1.000000e-06 2=1
+Reshape                  reshape_156              1 1 191 192 0=384 1=256
+Gemm                     gemm_12                  1 1 192 193 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=1536 9=384
+Reshape                  reshape_157              1 1 193 194 0=1536 1=16 2=16
+GELU                     gelu_46                  1 1 194 195
+Split                    splitncnn_19             1 3 195 196 197 198
+MemoryData               detector.stages.2.0.grn  0 1 199 0=1536 1=1 2=1
+MemoryData               pnnx_unique_16           0 1 200 0=1536 1=1 2=1
+Reduction                norm_229                 1 1 198 201 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_20             1 2 201 202 203
+Reduction                mean_210                 1 1 203 204 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_42                   1 1 204 205 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_43                   2 1 202 205 206 0=3
+BinaryOp                 mul_44                   2 1 196 206 207 0=2
+BinaryOp                 mul_45                   2 1 200 207 208 0=2
+BinaryOp                 add_46                   2 1 208 199 209 0=0
+BinaryOp                 add_47                   2 1 209 197 210 0=0
+Reshape                  reshape_158              1 1 210 211 0=1536 1=256
+Gemm                     gemm_13                  1 1 211 212 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=384 9=1536
+Reshape                  reshape_159              1 1 212 213 0=384 1=16 2=16
+Permute                  permute_107              1 1 213 214 0=4
+BinaryOp                 add_48                   2 1 187 214 215 0=0
+Split                    splitncnn_21             1 2 215 216 217
+ConvolutionDepthWise     convdw_248               1 1 217 218 0=384 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=18816 7=384
+Permute                  permute_108              1 1 218 219 0=3
+LayerNorm                ln_68                    1 1 219 220 0=384 1=1.000000e-06 2=1
+Reshape                  reshape_160              1 1 220 221 0=384 1=256
+Gemm                     gemm_14                  1 1 221 222 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=1536 9=384
+Reshape                  reshape_161              1 1 222 223 0=1536 1=16 2=16
+GELU                     gelu_47                  1 1 223 224
+Split                    splitncnn_22             1 3 224 225 226 227
+MemoryData               detector.stages.2.1.grn  0 1 228 0=1536 1=1 2=1
+MemoryData               pnnx_unique_18           0 1 229 0=1536 1=1 2=1
+Reduction                norm_230                 1 1 227 230 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_23             1 2 230 231 232
+Reduction                mean_211                 1 1 232 233 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_49                   1 1 233 234 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_50                   2 1 231 234 235 0=3
+BinaryOp                 mul_51                   2 1 225 235 236 0=2
+BinaryOp                 mul_52                   2 1 229 236 237 0=2
+BinaryOp                 add_53                   2 1 237 228 238 0=0
+BinaryOp                 add_54                   2 1 238 226 239 0=0
+Reshape                  reshape_162              1 1 239 240 0=1536 1=256
+Gemm                     gemm_15                  1 1 240 241 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=384 9=1536
+Reshape                  reshape_163              1 1 241 242 0=384 1=16 2=16
+Permute                  permute_109              1 1 242 243 0=4
+BinaryOp                 add_55                   2 1 216 243 244 0=0
+Split                    splitncnn_24             1 2 244 245 246
+ConvolutionDepthWise     convdw_249               1 1 246 247 0=384 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=18816 7=384
+Permute                  permute_110              1 1 247 248 0=3
+LayerNorm                ln_69                    1 1 248 249 0=384 1=1.000000e-06 2=1
+Reshape                  reshape_164              1 1 249 250 0=384 1=256
+Gemm                     gemm_16                  1 1 250 251 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=1536 9=384
+Reshape                  reshape_165              1 1 251 252 0=1536 1=16 2=16
+GELU                     gelu_48                  1 1 252 253
+Split                    splitncnn_25             1 3 253 254 255 256
+MemoryData               detector.stages.2.2.grn  0 1 257 0=1536 1=1 2=1
+MemoryData               pnnx_unique_20           0 1 258 0=1536 1=1 2=1
+Reduction                norm_231                 1 1 256 259 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_26             1 2 259 260 261
+Reduction                mean_212                 1 1 261 262 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_56                   1 1 262 263 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_57                   2 1 260 263 264 0=3
+BinaryOp                 mul_58                   2 1 254 264 265 0=2
+BinaryOp                 mul_59                   2 1 258 265 266 0=2
+BinaryOp                 add_60                   2 1 266 257 267 0=0
+BinaryOp                 add_61                   2 1 267 255 268 0=0
+Reshape                  reshape_166              1 1 268 269 0=1536 1=256
+Gemm                     gemm_17                  1 1 269 270 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=384 9=1536
+Reshape                  reshape_167              1 1 270 271 0=384 1=16 2=16
+Permute                  permute_111              1 1 271 272 0=4
+BinaryOp                 add_62                   2 1 245 272 273 0=0
+Split                    splitncnn_27             1 2 273 274 275
+ConvolutionDepthWise     convdw_250               1 1 275 276 0=384 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=18816 7=384
+Permute                  permute_112              1 1 276 277 0=3
+LayerNorm                ln_70                    1 1 277 278 0=384 1=1.000000e-06 2=1
+Reshape                  reshape_168              1 1 278 279 0=384 1=256
+Gemm                     gemm_18                  1 1 279 280 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=1536 9=384
+Reshape                  reshape_169              1 1 280 281 0=1536 1=16 2=16
+GELU                     gelu_49                  1 1 281 282
+Split                    splitncnn_28             1 3 282 283 284 285
+MemoryData               detector.stages.2.3.grn  0 1 286 0=1536 1=1 2=1
+MemoryData               pnnx_unique_22           0 1 287 0=1536 1=1 2=1
+Reduction                norm_232                 1 1 285 288 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_29             1 2 288 289 290
+Reduction                mean_213                 1 1 290 291 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_63                   1 1 291 292 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_64                   2 1 289 292 293 0=3
+BinaryOp                 mul_65                   2 1 283 293 294 0=2
+BinaryOp                 mul_66                   2 1 287 294 295 0=2
+BinaryOp                 add_67                   2 1 295 286 296 0=0
+BinaryOp                 add_68                   2 1 296 284 297 0=0
+Reshape                  reshape_170              1 1 297 298 0=1536 1=256
+Gemm                     gemm_19                  1 1 298 299 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=384 9=1536
+Reshape                  reshape_171              1 1 299 300 0=384 1=16 2=16
+Permute                  permute_113              1 1 300 301 0=4
+BinaryOp                 add_69                   2 1 274 301 302 0=0
+Split                    splitncnn_30             1 2 302 303 304
+ConvolutionDepthWise     convdw_251               1 1 304 305 0=384 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=18816 7=384
+Permute                  permute_114              1 1 305 306 0=3
+LayerNorm                ln_71                    1 1 306 307 0=384 1=1.000000e-06 2=1
+Reshape                  reshape_172              1 1 307 308 0=384 1=256
+Gemm                     gemm_20                  1 1 308 309 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=1536 9=384
+Reshape                  reshape_173              1 1 309 310 0=1536 1=16 2=16
+GELU                     gelu_50                  1 1 310 311
+Split                    splitncnn_31             1 3 311 312 313 314
+MemoryData               detector.stages.2.4.grn  0 1 315 0=1536 1=1 2=1
+MemoryData               pnnx_unique_24           0 1 316 0=1536 1=1 2=1
+Reduction                norm_233                 1 1 314 317 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_32             1 2 317 318 319
+Reduction                mean_214                 1 1 319 320 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_70                   1 1 320 321 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_71                   2 1 318 321 322 0=3
+BinaryOp                 mul_72                   2 1 312 322 323 0=2
+BinaryOp                 mul_73                   2 1 316 323 324 0=2
+BinaryOp                 add_74                   2 1 324 315 325 0=0
+BinaryOp                 add_75                   2 1 325 313 326 0=0
+Reshape                  reshape_174              1 1 326 327 0=1536 1=256
+Gemm                     gemm_21                  1 1 327 328 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=384 9=1536
+Reshape                  reshape_175              1 1 328 329 0=384 1=16 2=16
+Permute                  permute_115              1 1 329 330 0=4
+BinaryOp                 add_76                   2 1 303 330 331 0=0
+Split                    splitncnn_33             1 2 331 332 333
+ConvolutionDepthWise     convdw_252               1 1 333 334 0=384 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=18816 7=384
+Permute                  permute_116              1 1 334 335 0=3
+LayerNorm                ln_72                    1 1 335 336 0=384 1=1.000000e-06 2=1
+Reshape                  reshape_176              1 1 336 337 0=384 1=256
+Gemm                     gemm_22                  1 1 337 338 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=1536 9=384
+Reshape                  reshape_177              1 1 338 339 0=1536 1=16 2=16
+GELU                     gelu_51                  1 1 339 340
+Split                    splitncnn_34             1 3 340 341 342 343
+MemoryData               detector.stages.2.5.grn  0 1 344 0=1536 1=1 2=1
+MemoryData               pnnx_unique_26           0 1 345 0=1536 1=1 2=1
+Reduction                norm_234                 1 1 343 346 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_35             1 2 346 347 348
+Reduction                mean_215                 1 1 348 349 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_77                   1 1 349 350 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_78                   2 1 347 350 351 0=3
+BinaryOp                 mul_79                   2 1 341 351 352 0=2
+BinaryOp                 mul_80                   2 1 345 352 353 0=2
+BinaryOp                 add_81                   2 1 353 344 354 0=0
+BinaryOp                 add_82                   2 1 354 342 355 0=0
+Reshape                  reshape_178              1 1 355 356 0=1536 1=256
+Gemm                     gemm_23                  1 1 356 357 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=384 9=1536
+Reshape                  reshape_179              1 1 357 358 0=384 1=16 2=16
+Permute                  permute_117              1 1 358 359 0=4
+BinaryOp                 add_83                   2 1 332 359 360 0=0
+Split                    splitncnn_36             1 2 360 361 362
+ConvolutionDepthWise     convdw_253               1 1 362 363 0=384 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=18816 7=384
+Permute                  permute_118              1 1 363 364 0=3
+LayerNorm                ln_73                    1 1 364 365 0=384 1=1.000000e-06 2=1
+Reshape                  reshape_180              1 1 365 366 0=384 1=256
+Gemm                     gemm_24                  1 1 366 367 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=1536 9=384
+Reshape                  reshape_181              1 1 367 368 0=1536 1=16 2=16
+GELU                     gelu_52                  1 1 368 369
+Split                    splitncnn_37             1 3 369 370 371 372
+MemoryData               detector.stages.2.6.grn  0 1 373 0=1536 1=1 2=1
+MemoryData               pnnx_unique_28           0 1 374 0=1536 1=1 2=1
+Reduction                norm_235                 1 1 372 375 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_38             1 2 375 376 377
+Reduction                mean_216                 1 1 377 378 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_84                   1 1 378 379 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_85                   2 1 376 379 380 0=3
+BinaryOp                 mul_86                   2 1 370 380 381 0=2
+BinaryOp                 mul_87                   2 1 374 381 382 0=2
+BinaryOp                 add_88                   2 1 382 373 383 0=0
+BinaryOp                 add_89                   2 1 383 371 384 0=0
+Reshape                  reshape_182              1 1 384 385 0=1536 1=256
+Gemm                     gemm_25                  1 1 385 386 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=384 9=1536
+Reshape                  reshape_183              1 1 386 387 0=384 1=16 2=16
+Permute                  permute_119              1 1 387 388 0=4
+BinaryOp                 add_90                   2 1 361 388 389 0=0
+Split                    splitncnn_39             1 2 389 390 391
+ConvolutionDepthWise     convdw_254               1 1 391 392 0=384 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=18816 7=384
+Permute                  permute_120              1 1 392 393 0=3
+LayerNorm                ln_74                    1 1 393 394 0=384 1=1.000000e-06 2=1
+Reshape                  reshape_184              1 1 394 395 0=384 1=256
+Gemm                     gemm_26                  1 1 395 396 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=1536 9=384
+Reshape                  reshape_185              1 1 396 397 0=1536 1=16 2=16
+GELU                     gelu_53                  1 1 397 398
+Split                    splitncnn_40             1 3 398 399 400 401
+MemoryData               detector.stages.2.7.grn  0 1 402 0=1536 1=1 2=1
+MemoryData               pnnx_unique_30           0 1 403 0=1536 1=1 2=1
+Reduction                norm_236                 1 1 401 404 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_41             1 2 404 405 406
+Reduction                mean_217                 1 1 406 407 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_91                   1 1 407 408 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_92                   2 1 405 408 409 0=3
+BinaryOp                 mul_93                   2 1 399 409 410 0=2
+BinaryOp                 mul_94                   2 1 403 410 411 0=2
+BinaryOp                 add_95                   2 1 411 402 412 0=0
+BinaryOp                 add_96                   2 1 412 400 413 0=0
+Reshape                  reshape_186              1 1 413 414 0=1536 1=256
+Gemm                     gemm_27                  1 1 414 415 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=384 9=1536
+Reshape                  reshape_187              1 1 415 416 0=384 1=16 2=16
+Permute                  permute_121              1 1 416 417 0=4
+BinaryOp                 add_97                   2 1 390 417 418 0=0
+Split                    splitncnn_42             1 2 418 419 420
+ConvolutionDepthWise     convdw_255               1 1 420 421 0=384 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=18816 7=384
+Permute                  permute_122              1 1 421 422 0=3
+LayerNorm                ln_75                    1 1 422 423 0=384 1=1.000000e-06 2=1
+Reshape                  reshape_188              1 1 423 424 0=384 1=256
+Gemm                     gemm_28                  1 1 424 425 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=1536 9=384
+Reshape                  reshape_189              1 1 425 426 0=1536 1=16 2=16
+GELU                     gelu_54                  1 1 426 427
+Split                    splitncnn_43             1 3 427 428 429 430
+MemoryData               detector.stages.2.8.grn  0 1 431 0=1536 1=1 2=1
+MemoryData               pnnx_unique_32           0 1 432 0=1536 1=1 2=1
+Reduction                norm_237                 1 1 430 433 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_44             1 2 433 434 435
+Reduction                mean_218                 1 1 435 436 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_98                   1 1 436 437 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_99                   2 1 434 437 438 0=3
+BinaryOp                 mul_100                  2 1 428 438 439 0=2
+BinaryOp                 mul_101                  2 1 432 439 440 0=2
+BinaryOp                 add_102                  2 1 440 431 441 0=0
+BinaryOp                 add_103                  2 1 441 429 442 0=0
+Reshape                  reshape_190              1 1 442 443 0=1536 1=256
+Gemm                     gemm_29                  1 1 443 444 10=4 2=0 3=1 4=0 5=1 6=1 7=256 8=384 9=1536
+Reshape                  reshape_191              1 1 444 445 0=384 1=16 2=16
+Permute                  permute_123              1 1 445 446 0=4
+BinaryOp                 add_104                  2 1 419 446 447 0=0
+Permute                  permute_124              1 1 447 448 0=3
+LayerNorm                ln_76                    1 1 448 449 0=384 1=1.000000e-06 2=1
+Permute                  permute_125              1 1 449 450 0=4
+Convolution              conv_39                  1 1 450 451 0=768 1=2 11=2 12=1 13=2 14=0 2=1 3=2 4=0 5=1 6=1179648
+Split                    splitncnn_45             1 2 451 452 453
+ConvolutionDepthWise     convdw_256               1 1 453 454 0=768 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=37632 7=768
+Permute                  permute_126              1 1 454 455 0=3
+LayerNorm                ln_77                    1 1 455 456 0=768 1=1.000000e-06 2=1
+Reshape                  reshape_192              1 1 456 457 0=768 1=64
+Gemm                     gemm_30                  1 1 457 458 10=4 2=0 3=1 4=0 5=1 6=1 7=64 8=3072 9=768
+Reshape                  reshape_193              1 1 458 459 0=3072 1=8 2=8
+GELU                     gelu_55                  1 1 459 460
+Split                    splitncnn_46             1 3 460 461 462 463
+MemoryData               detector.stages.3.0.grn  0 1 464 0=3072 1=1 2=1
+MemoryData               pnnx_unique_35           0 1 465 0=3072 1=1 2=1
+Reduction                norm_238                 1 1 463 466 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_47             1 2 466 467 468
+Reduction                mean_219                 1 1 468 469 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_105                  1 1 469 470 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_106                  2 1 467 470 471 0=3
+BinaryOp                 mul_107                  2 1 461 471 472 0=2
+BinaryOp                 mul_108                  2 1 465 472 473 0=2
+BinaryOp                 add_109                  2 1 473 464 474 0=0
+BinaryOp                 add_110                  2 1 474 462 475 0=0
+Reshape                  reshape_194              1 1 475 476 0=3072 1=64
+Gemm                     gemm_31                  1 1 476 477 10=4 2=0 3=1 4=0 5=1 6=1 7=64 8=768 9=3072
+Reshape                  reshape_195              1 1 477 478 0=768 1=8 2=8
+Permute                  permute_127              1 1 478 479 0=4
+BinaryOp                 add_111                  2 1 452 479 480 0=0
+Split                    splitncnn_48             1 2 480 481 482
+ConvolutionDepthWise     convdw_257               1 1 482 483 0=768 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=37632 7=768
+Permute                  permute_128              1 1 483 484 0=3
+LayerNorm                ln_78                    1 1 484 485 0=768 1=1.000000e-06 2=1
+Reshape                  reshape_196              1 1 485 486 0=768 1=64
+Gemm                     gemm_32                  1 1 486 487 10=4 2=0 3=1 4=0 5=1 6=1 7=64 8=3072 9=768
+Reshape                  reshape_197              1 1 487 488 0=3072 1=8 2=8
+GELU                     gelu_56                  1 1 488 489
+Split                    splitncnn_49             1 3 489 490 491 492
+MemoryData               detector.stages.3.1.grn  0 1 493 0=3072 1=1 2=1
+MemoryData               pnnx_unique_37           0 1 494 0=3072 1=1 2=1
+Reduction                norm_239                 1 1 492 495 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_50             1 2 495 496 497
+Reduction                mean_220                 1 1 497 498 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_112                  1 1 498 499 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_113                  2 1 496 499 500 0=3
+BinaryOp                 mul_114                  2 1 490 500 501 0=2
+BinaryOp                 mul_115                  2 1 494 501 502 0=2
+BinaryOp                 add_116                  2 1 502 493 503 0=0
+BinaryOp                 add_117                  2 1 503 491 504 0=0
+Reshape                  reshape_198              1 1 504 505 0=3072 1=64
+Gemm                     gemm_33                  1 1 505 506 10=4 2=0 3=1 4=0 5=1 6=1 7=64 8=768 9=3072
+Reshape                  reshape_199              1 1 506 507 0=768 1=8 2=8
+Permute                  permute_129              1 1 507 508 0=4
+BinaryOp                 add_118                  2 1 481 508 509 0=0
+Split                    splitncnn_51             1 2 509 510 511
+ConvolutionDepthWise     convdw_258               1 1 511 512 0=768 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=37632 7=768
+Permute                  permute_130              1 1 512 513 0=3
+LayerNorm                ln_79                    1 1 513 514 0=768 1=1.000000e-06 2=1
+Reshape                  reshape_200              1 1 514 515 0=768 1=64
+Gemm                     gemm_34                  1 1 515 516 10=4 2=0 3=1 4=0 5=1 6=1 7=64 8=3072 9=768
+Reshape                  reshape_201              1 1 516 517 0=3072 1=8 2=8
+GELU                     gelu_57                  1 1 517 518
+Split                    splitncnn_52             1 3 518 519 520 521
+MemoryData               detector.stages.3.2.grn  0 1 522 0=3072 1=1 2=1
+MemoryData               pnnx_unique_39           0 1 523 0=3072 1=1 2=1
+Reduction                norm_240                 1 1 521 524 0=8 1=0 -23303=2,0,1 4=1 5=1
+Split                    splitncnn_53             1 2 524 525 526
+Reduction                mean_221                 1 1 526 527 0=3 1=0 -23303=1,-1 4=1 5=1
+BinaryOp                 add_119                  1 1 527 528 0=0 1=1 2=1.000000e-06
+BinaryOp                 div_120                  2 1 525 528 529 0=3
+BinaryOp                 mul_121                  2 1 519 529 530 0=2
+BinaryOp                 mul_122                  2 1 523 530 531 0=2
+BinaryOp                 add_123                  2 1 531 522 532 0=0
+BinaryOp                 add_124                  2 1 532 520 533 0=0
+Reshape                  reshape_202              1 1 533 534 0=3072 1=64
+Gemm                     gemm_35                  1 1 534 535 10=4 2=0 3=1 4=0 5=1 6=1 7=64 8=768 9=3072
+Reshape                  reshape_203              1 1 535 536 0=768 1=8 2=8
+Permute                  permute_131              1 1 536 537 0=4
+BinaryOp                 add_125                  2 1 510 537 538 0=0
+Reduction                mean_222                 1 1 538 539 0=3 1=0 -23303=2,-2,-1 4=0 5=1
+LayerNorm                ln_80                    1 1 539 540 0=768 1=1.000000e-06 2=1
+Split                    splitncnn_54             1 7 540 541 542 543 544 545 546 547
+InnerProduct             linear_81                1 1 547 out6 0=63 1=1 2=48384
+InnerProduct             linear_82                1 1 546 5462 0=66 1=1 2=50688
+InnerProduct             linear_83                1 1 545 5452 0=66 1=1 2=50688
+InnerProduct             linear_84                1 1 544 5442 0=66 1=1 2=50688
+InnerProduct             linear_85                1 1 543 out3 0=3 1=1 2=2304
+InnerProduct             linear_86                1 1 542 out4 0=63 1=1 2=48384
+InnerProduct             linear_87                1 1 541 out5 0=1 1=1 2=768
+Softmax                  softmax_1                1 1 5462 out0 0=0 1=1
+Softmax                  softmax_2                1 1 5452 out1 0=0 1=1
+Softmax                  softmax_3                1 1 5442 out2 0=0 1=1

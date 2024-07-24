@@ -1,0 +1,63 @@
+7767517
+61 61
+Input                    input                     0 1 input
+BinaryOp                 _minusscalar0            1 1 input _minusscalar0 0=1 1=1 2=1.275000e+02
+BinaryOp                 _mulscalar0              1 1 _minusscalar0 _mulscalar0 0=2 1=1 2=7.812500e-03
+Convolution              conv_1_conv2d            1 1 _mulscalar0 conv_1_batchnorm 0=16 1=3 3=2 4=1 5=1 6=432
+PReLU                    conv_1_relu              1 1 conv_1_batchnorm conv_1_relu 0=16
+ConvolutionDepthWise     conv_2_dw_conv2d         1 1 conv_1_relu conv_2_dw_batchnorm 0=16 1=3 4=1 5=1 6=144 7=16
+PReLU                    conv_2_dw_relu           1 1 conv_2_dw_batchnorm conv_2_dw_relu 0=16
+Convolution              conv_2_conv2d            1 1 conv_2_dw_relu conv_2_batchnorm 0=32 1=1 5=1 6=512
+PReLU                    conv_2_relu              1 1 conv_2_batchnorm conv_2_relu 0=32
+ConvolutionDepthWise     conv_3_dw_conv2d         1 1 conv_2_relu conv_3_dw_batchnorm 0=32 1=3 3=2 4=1 5=1 6=288 7=32
+PReLU                    conv_3_dw_relu           1 1 conv_3_dw_batchnorm conv_3_dw_relu 0=32
+Convolution              conv_3_conv2d            1 1 conv_3_dw_relu conv_3_batchnorm 0=64 1=1 5=1 6=2048
+PReLU                    conv_3_relu              1 1 conv_3_batchnorm conv_3_relu 0=64
+ConvolutionDepthWise     conv_4_dw_conv2d         1 1 conv_3_relu conv_4_dw_batchnorm 0=64 1=3 4=1 5=1 6=576 7=64
+PReLU                    conv_4_dw_relu           1 1 conv_4_dw_batchnorm conv_4_dw_relu 0=64
+Convolution              conv_4_conv2d            1 1 conv_4_dw_relu conv_4_batchnorm 0=64 1=1 5=1 6=4096
+PReLU                    conv_4_relu              1 1 conv_4_batchnorm conv_4_relu 0=64
+ConvolutionDepthWise     conv_5_dw_conv2d         1 1 conv_4_relu conv_5_dw_batchnorm 0=64 1=3 3=2 4=1 5=1 6=576 7=64
+PReLU                    conv_5_dw_relu           1 1 conv_5_dw_batchnorm conv_5_dw_relu 0=64
+Convolution              conv_5_conv2d            1 1 conv_5_dw_relu conv_5_batchnorm 0=128 1=1 5=1 6=8192
+PReLU                    conv_5_relu              1 1 conv_5_batchnorm conv_5_relu 0=128
+ConvolutionDepthWise     conv_6_dw_conv2d         1 1 conv_5_relu conv_6_dw_batchnorm 0=128 1=3 4=1 5=1 6=1152 7=128
+PReLU                    conv_6_dw_relu           1 1 conv_6_dw_batchnorm conv_6_dw_relu 0=128
+Convolution              conv_6_conv2d            1 1 conv_6_dw_relu conv_6_batchnorm 0=128 1=1 5=1 6=16384
+PReLU                    conv_6_relu              1 1 conv_6_batchnorm conv_6_relu 0=128
+ConvolutionDepthWise     conv_7_dw_conv2d         1 1 conv_6_relu conv_7_dw_batchnorm 0=128 1=3 3=2 4=1 5=1 6=1152 7=128
+PReLU                    conv_7_dw_relu           1 1 conv_7_dw_batchnorm conv_7_dw_relu 0=128
+Convolution              conv_7_conv2d            1 1 conv_7_dw_relu conv_7_batchnorm 0=256 1=1 5=1 6=32768
+PReLU                    conv_7_relu              1 1 conv_7_batchnorm conv_7_relu 0=256
+ConvolutionDepthWise     conv_8_dw_conv2d         1 1 conv_7_relu conv_8_dw_batchnorm 0=256 1=3 4=1 5=1 6=2304 7=256
+PReLU                    conv_8_dw_relu           1 1 conv_8_dw_batchnorm conv_8_dw_relu 0=256
+Convolution              conv_8_conv2d            1 1 conv_8_dw_relu conv_8_batchnorm 0=256 1=1 5=1 6=65536
+PReLU                    conv_8_relu              1 1 conv_8_batchnorm conv_8_relu 0=256
+ConvolutionDepthWise     conv_9_dw_conv2d         1 1 conv_8_relu conv_9_dw_batchnorm 0=256 1=3 4=1 5=1 6=2304 7=256
+PReLU                    conv_9_dw_relu           1 1 conv_9_dw_batchnorm conv_9_dw_relu 0=256
+Convolution              conv_9_conv2d            1 1 conv_9_dw_relu conv_9_batchnorm 0=256 1=1 5=1 6=65536
+PReLU                    conv_9_relu              1 1 conv_9_batchnorm conv_9_relu 0=256
+ConvolutionDepthWise     conv_10_dw_conv2d        1 1 conv_9_relu conv_10_dw_batchnorm 0=256 1=3 4=1 5=1 6=2304 7=256
+PReLU                    conv_10_dw_relu          1 1 conv_10_dw_batchnorm conv_10_dw_relu 0=256
+Convolution              conv_10_conv2d           1 1 conv_10_dw_relu conv_10_batchnorm 0=256 1=1 5=1 6=65536
+PReLU                    conv_10_relu             1 1 conv_10_batchnorm conv_10_relu 0=256
+ConvolutionDepthWise     conv_11_dw_conv2d        1 1 conv_10_relu conv_11_dw_batchnorm 0=256 1=3 4=1 5=1 6=2304 7=256
+PReLU                    conv_11_dw_relu          1 1 conv_11_dw_batchnorm conv_11_dw_relu 0=256
+Convolution              conv_11_conv2d           1 1 conv_11_dw_relu conv_11_batchnorm 0=256 1=1 5=1 6=65536
+PReLU                    conv_11_relu             1 1 conv_11_batchnorm conv_11_relu 0=256
+ConvolutionDepthWise     conv_12_dw_conv2d        1 1 conv_11_relu conv_12_dw_batchnorm 0=256 1=3 4=1 5=1 6=2304 7=256
+PReLU                    conv_12_dw_relu          1 1 conv_12_dw_batchnorm conv_12_dw_relu 0=256
+Convolution              conv_12_conv2d           1 1 conv_12_dw_relu conv_12_batchnorm 0=256 1=1 5=1 6=65536
+PReLU                    conv_12_relu             1 1 conv_12_batchnorm conv_12_relu 0=256
+ConvolutionDepthWise     conv_13_dw_conv2d        1 1 conv_12_relu conv_13_dw_batchnorm 0=256 1=3 3=2 4=1 5=1 6=2304 7=256
+PReLU                    conv_13_dw_relu          1 1 conv_13_dw_batchnorm conv_13_dw_relu 0=256
+Convolution              conv_13_conv2d           1 1 conv_13_dw_relu conv_13_batchnorm 0=512 1=1 5=1 6=131072
+PReLU                    conv_13_relu             1 1 conv_13_batchnorm conv_13_relu 0=512
+ConvolutionDepthWise     conv_14_dw_conv2d        1 1 conv_13_relu conv_14_dw_batchnorm 0=512 1=3 4=1 5=1 6=4608 7=512
+PReLU                    conv_14_dw_relu          1 1 conv_14_dw_batchnorm conv_14_dw_relu 0=512
+Convolution              conv_14_conv2d           1 1 conv_14_dw_relu conv_14_batchnorm 0=512 1=1 5=1 6=262144
+PReLU                    conv_14_relu             1 1 conv_14_batchnorm conv_14_relu 0=512
+Convolution              conv_15_conv2d           1 1 conv_14_relu conv_15_batchnorm 0=64 1=3 3=2 4=1 5=1 6=294912
+PReLU                    conv_15_relu             1 1 conv_15_batchnorm conv_15_relu 0=64
+Flatten                  flatten0                 1 1 conv_15_relu flatten0
+InnerProduct             fc1                      1 1 flatten0 out 0=212 1=1 2=122112

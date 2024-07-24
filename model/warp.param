@@ -1,0 +1,102 @@
+7767517
+100 112    
+Input                    feat                             0 1 feat
+Input                    mesh                             0 1 mesh
+Input                    kp_source                        0 1 kp_source
+Input                    kp_driving                       0 1 kp_driving
+Input                    zeros                            0 1 zeros
+Split                    warping_splitncnn_x              1 2 feat warping_in0_splitncnn_0 warping_in0_splitncnn_1
+Split                    warping_splitncnn_0              1 3 mesh warping_mesh_splitncnn_0 warping_mesh_splitncnn_1 warping_mesh_splitncnn_2
+Reshape                  warping_Reshape_0                1 1 kp_driving warping_10 0=3 1=1 11=1 2=21
+BinaryOp                 warping_Add_0                    2 1 warping_mesh_splitncnn_0 warping_10 warping_11 0=1
+Split                    warping_splitncnn_1              1 2 warping_11 warping_11_splitncnn_0 warping_11_splitncnn_1
+Reshape                  warping_Reshape_1                1 1 kp_source warping_12 0=3 1=1 11=1 2=21
+Split                    warping_splitncnn_2              1 2 warping_12 warping_12_splitncnn_0 warping_12_splitncnn_1
+BinaryOp                 warping_Add_1                    2 1 warping_11_splitncnn_0 warping_12_splitncnn_0 warping_13 0=0
+Concat                   warping_Concat_0                 2 1 warping_mesh_splitncnn_1 warping_13 warping_14 0=0
+Split                    warping_splitncnn_3              1 2 warping_14 warping_14_splitncnn_0 warping_14_splitncnn_1
+UnaryOp                  warping_Exp_0                    1 1 warping_11_splitncnn_1 warping_16 0=4
+Reduction                warping_mean_204                 1 1 warping_16 warping_17 0=0 1=0 -23303=1,3 4=0 5=1
+BinaryOp                 warping_add_0                    1 1 warping_17 warping_18 0=2 1=1 2=-5.000000e01
+UnaryOp                  warping_Exp_1                    1 1 warping_18 warping_19 0=7
+BinaryOp                 warping_Add_3                    2 1 warping_mesh_splitncnn_2 warping_12_splitncnn_1 warping_20 0=1
+UnaryOp                  warping_Exp_2                    1 1 warping_20 warping_22 0=4
+Reduction                warping_mean_204                 1 1 warping_22 warping_23 0=0 1=0 -23303=1,3 4=0 5=1
+BinaryOp                 warping_add_0                    1 1 warping_23 warping_24 0=2 1=1 2=-5.000000e01
+UnaryOp                  warping_Exp_3                    1 1 warping_24 warping_25 0=7
+BinaryOp                 warping_Add_4                    2 1 warping_19 warping_25 warping_26 0=1
+Concat                   warping_Concat_1                 2 1 zeros warping_26 warping_27 0=0
+Reshape                  warping_Reshape_2                1 1 warping_27 warping_28 0=4096 1=16 11=1 2=22
+Convolution3D            warping_conv3d_2                 1 1 warping_in0_splitncnn_0 warping_3 0=4 1=1 5=1 6=128
+ReLU                     warping_relu_1                   1 1 warping_3 warping_4
+GridSampleN              warping_gridsample_0             2 1 warping_4 warping_14_splitncnn_0 warping_30
+Concat                   warping_Concat_2                 2 1 warping_28 warping_30 warping_31 0=1
+Reshape                  warping_Reshape_3                1 1 warping_31 warping_out 0=64 1=64 11=16 2=110
+Split                    warping1_splitncnn_0              1 2 warping_out warping1_3 warping1_4
+Convolution3D            warping1_conv3d_27                1 1 warping1_4 warping1_5 0=64 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=190080
+ReLU                     warping1_relu_1                   1 1 warping1_5 warping1_6
+Pooling3D                warping1_avgpool3d_19             1 1 warping1_6 warping1_7 0=1 1=2 11=2 12=2 13=0 2=2 21=1 22=1 23=0 3=0 5=1 6=1
+Split                    warping1_splitncnn_1              1 2 warping1_7 warping1_8 warping1_9
+Convolution3D            warping1_conv3d_28                1 1 warping1_9 warping1_10 0=128 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=221184
+ReLU                     warping1_relu_2                   1 1 warping1_10 warping1_11
+Pooling3D                warping1_avgpool3d_20             1 1 warping1_11 warping1_12 0=1 1=2 11=2 12=2 13=0 2=2 21=1 22=1 23=0 3=0 5=1 6=1
+Split                    warping1_splitncnn_2              1 2 warping1_12 warping1_13 warping1_14
+Convolution3D            warping1_conv3d_29                1 1 warping1_14 warping1_15 0=256 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=884736
+ReLU                     warping1_relu_3                   1 1 warping1_15 warping1_16
+Pooling3D                warping1_avgpool3d_21             1 1 warping1_16 warping1_17 0=1 1=2 11=2 12=2 13=0 2=2 21=1 22=1 23=0 3=0 5=1 6=1
+Split                    warping1_splitncnn_3              1 2 warping1_17 warping1_18 warping1_19
+Convolution3D            warping1_conv3d_30                1 1 warping1_19 warping1_20 0=512 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=3538944
+ReLU                     warping1_relu_4                   1 1 warping1_20 warping1_21
+Pooling3D                warping1_avgpool3d_22             1 1 warping1_21 warping1_22 0=1 1=2 11=2 12=2 13=0 2=2 21=1 22=1 23=0 3=0 5=1 6=1
+Split                    warping1_splitncnn_4              1 2 warping1_22 warping1_23 warping1_24
+Convolution3D            warping1_conv3d_31                1 1 warping1_24 warping1_25 0=1024 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=14155776
+ReLU                     warping1_relu_5                   1 1 warping1_25 warping1_26
+Pooling3D                warping1_avgpool3d_23             1 1 warping1_26 warping1_27 0=1 1=2 11=2 12=2 13=0 2=2 21=1 22=1 23=0 3=0 5=1 6=1
+Reshape                  warping1_view_43                  1 1 warping1_27 warping1_28 0=2 1=2 2=16384
+Interp                   warping1_upsample_nearest_14      1 1 warping1_28 warping1_29 0=1 1=2.000000e+00 2=2.000000e+00 6=0
+Reshape                  warping1_view_44                  1 1 warping1_29 warping1_30 0=4 1=4 11=16 2=1024
+Convolution3D            warping1_conv3d_32                1 1 warping1_30 warping1_31 0=512 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=14155776
+ReLU                     warping1_relu_6                   1 1 warping1_31 warping1_32
+Concat                   warping1_cat_0                    2 1 warping1_32 warping1_23 warping1_33 0=0
+Reshape                  warping1_view_45                  1 1 warping1_33 warping1_34 0=4 1=4 2=16384
+Interp                   warping1_upsample_nearest_15      1 1 warping1_34 warping1_35 0=1 1=2.000000e+00 2=2.000000e+00 6=0
+Reshape                  warping1_view_46                  1 1 warping1_35 warping1_36 0=8 1=8 11=16 2=1024
+Convolution3D            warping1_conv3d_33                1 1 warping1_36 warping1_37 0=256 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=7077888
+ReLU                     warping1_relu_7                   1 1 warping1_37 warping1_38
+Concat                   warping1_cat_1                    2 1 warping1_38 warping1_18 warping1_39 0=0
+Reshape                  warping1_view_47                  1 1 warping1_39 warping1_40 0=8 1=8 2=8192
+Interp                   warping1_upsample_nearest_16      1 1 warping1_40 warping1_41 0=1 1=2.000000e+00 2=2.000000e+00 6=0
+Reshape                  warping1_view_48                  1 1 warping1_41 warping1_42 0=16 1=16 11=16 2=512
+Convolution3D            warping1_conv3d_34                1 1 warping1_42 warping1_43 0=128 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=1769472
+ReLU                     warping1_relu_8                   1 1 warping1_43 warping1_44
+Concat                   warping1_cat_2                    2 1 warping1_44 warping1_13 warping1_45 0=0
+Reshape                  warping1_view_49                  1 1 warping1_45 warping1_46 0=16 1=16 2=4096
+Interp                   warping1_upsample_nearest_17      1 1 warping1_46 warping1_47 0=1 1=2.000000e+00 2=2.000000e+00 6=0
+Reshape                  warping1_view_50                  1 1 warping1_47 warping1_48 0=32 1=32 11=16 2=256
+Convolution3D            warping1_conv3d_35                1 1 warping1_48 warping1_49 0=64 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=442368
+ReLU                     warping1_relu_9                   1 1 warping1_49 warping1_50
+Concat                   warping1_cat_3                    2 1 warping1_50 warping1_8 warping1_51 0=0
+Reshape                  warping1_view_51                  1 1 warping1_51 warping1_52 0=32 1=32 2=2048
+Interp                   warping1_upsample_nearest_18      1 1 warping1_52 warping1_53 0=1 1=2.000000e+00 2=2.000000e+00 6=0
+Reshape                  warping1_view_52                  1 1 warping1_53 warping1_54 0=64 1=64 11=16 2=128
+Convolution3D            warping1_conv3d_36                1 1 warping1_54 warping1_55 0=32 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=110592
+ReLU                     warping1_relu_10                  1 1 warping1_55 warping1_56
+Concat                   warping1_cat_4                    2 1 warping1_56 warping1_3 warping1_57 0=0
+Convolution3D            warping1_conv3d_37                1 1 warping1_57 warping1_58 0=142 1=3 11=3 12=1 13=1 14=1 2=1 21=3 22=1 23=1 24=1 3=1 4=1 5=1 6=544428
+ReLU                     warping1_relu_11                  1 1 warping1_58 warping1_59
+Split                    warping1_splitncnn_5              1 2 warping1_59 warping1_60 warping1_61
+Convolution3D            warping1_conv3d_38                1 1 warping1_60 warping1_62 0=22 1=7 11=7 12=1 13=1 14=3 2=1 21=7 22=1 23=1 24=3 3=1 4=3 5=1 6=1071532
+Reshape                  warping1_reshape_51               1 1 warping1_62 warping1_652 0=4096 1=16 2=22
+Softmax                  warping1_softmax_13               1 1 warping1_652 warping1_63 0=0 1=1
+Permute                  warping1_permute_40               1 1 warping_14_splitncnn_1 warping1_64 0=4
+Reshape                  warping1_reshape_41               1 1 warping1_63 warping1_65 0=4096 1=16 11=1 2=22
+BinaryOp                 warping1_mul_0                    2 1 warping1_64 warping1_65 warping1_66 0=2
+Reduction                warping1_sum_55                   1 1 warping1_66 warping1_67 0=0 1=0 -23303=1,0 4=0 5=1
+Reshape                  warping1_reshape_42               1 1 warping1_67 warping1_68 0=64 1=64 11=16 2=3
+Reshape                  warping1_view_53                  1 1 warping1_61 warping1_69 0=64 1=64 2=2272
+Convolution              warping1_convsigmoid_1            1 1 warping1_69 warping1_70 0=1 1=7 11=7 12=1 13=1 14=3 2=1 3=1 4=3 5=1 6=111328 9=4
+GridSample               warping1_permutegridsample_0      2 1 warping_in0_splitncnn_1 warping1_68 warping1_71 0=1 1=1 2=0 3=1
+Reshape                  warping1_view_54                  1 1 warping1_71 warping1_72 0=64 1=64 2=512
+Convolution              warping1_convrelu_0               1 1 warping1_72 warping1_73 0=256 1=3 -23310=1,1.000000e-02 11=3 12=1 13=1 14=1 2=1 3=1 4=1 5=1 6=1179648 9=2
+Convolution              warping1_conv_26                  1 1 warping1_73 warping1_74 0=256 1=1 11=1 12=1 13=1 14=0 2=1 3=1 4=0 5=1 6=65536
+BinaryOp                 warping1_mul_1                    2 1 warping1_74 warping1_70 out0 0=2

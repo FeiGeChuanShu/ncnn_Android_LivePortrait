@@ -1,0 +1,228 @@
+7767517
+226 247
+Input                    input                    0 1 input
+BinaryOp                 _mulscalar0              1 1 input _mulscalar0 0=2 1=1 2=3.9215686e-04
+Convolution              Conv_2                   1 1 _mulscalar0 x0 0=96 1=4 3=4 5=1 6=4608
+Permute                  Transpose_15             1 1 x0 x02 0=3
+LayerNorm                Add_13                   1 1 x02 onnx::Conv_210 0=96 1=1.000000e-06
+Permute                  Transpose_40             1 1 onnx::Conv_210 onnx::Conv_2102 0=4
+Split                    splitncnn_0              1 2 onnx::Conv_2102 onnx::Conv_210_splitncnn_0 onnx::Conv_210_splitncnn_1
+ConvolutionDepthWise     Conv_14                  1 1 onnx::Conv_210_splitncnn_1 x.3 0=96 1=7 4=3 5=1 6=4704 7=96
+Permute                  Transpose_15             1 1 x.3 input.1 0=3
+Reshape                  Reshape_584              1 1 input.1 input.12 0=96 1=-1
+LayerNorm                Add_26                   1 1 input.12 input0 0=96 1=1.000000e-06
+InnerProduct             MatMul_27                1 1 input0 input.3 0=384 1=1 2=36864
+GELU                     gelu_0                   1 1 input.3 onnx::MatMul_234 0=1
+InnerProduct             MatMul_37                1 1 onnx::MatMul_234 x.12 0=96 1=1 2=36864
+Reshape                  Reshape_584              1 1 x.12 x.122 0=96 1=56 2=56
+Permute                  Transpose_40             1 1 x.122 x0.3 0=4
+BinaryOp                 Add_41                   2 1 onnx::Conv_210_splitncnn_0 x0.3 onnx::Conv_240
+Split                    splitncnn_2              1 2 onnx::Conv_240 onnx::Conv_240_splitncnn_0 onnx::Conv_240_splitncnn_1
+ConvolutionDepthWise     Conv_42                  1 1 onnx::Conv_240_splitncnn_1 x.16 0=96 1=7 4=3 5=1 6=4704 7=96
+Permute                  Transpose_43             1 1 x.16 input.7 0=3
+Reshape                  Reshape_584              1 1 input.7 input.72 0=96 1=-1
+LayerNorm                Add_54                   1 1 input.72 input0.3 0=96 1=1.000000e-06
+InnerProduct             MatMul_55                1 1 input0.3 input.11 0=384 1=1 2=36864
+GELU                     gelu_0                   1 1 input.11 onnx::MatMul_264 0=1
+InnerProduct             MatMul_65                1 1 onnx::MatMul_264 x.24 0=96 1=1 2=36864
+Reshape                  Reshape_584              1 1 x.24 x.242 0=96 1=56 2=56
+Permute                  Transpose_68             1 1 x.242 x0.7 0=4
+BinaryOp                 Add_69                   2 1 onnx::Conv_240_splitncnn_0 x0.7 onnx::Conv_270
+Split                    splitncnn_4              1 2 onnx::Conv_270 onnx::Conv_270_splitncnn_0 onnx::Conv_270_splitncnn_1
+ConvolutionDepthWise     Conv_70                  1 1 onnx::Conv_270_splitncnn_1 x.28 0=96 1=7 4=3 5=1 6=4704 7=96
+Permute                  Transpose_71             1 1 x.28 input.15 0=3
+Reshape                  Reshape_584              1 1 input.15 input.152 0=96 1=-1
+LayerNorm                Add_82                   1 1 input.152 input0.7 0=96 1=1.000000e-06
+InnerProduct             MatMul_83                1 1 input0.7 input.19 0=384 1=1 2=36864
+GELU                     gelu_0                   1 1 input.19 onnx::MatMul_294 0=1
+InnerProduct             MatMul_93                1 1 onnx::MatMul_294 x.36 0=96 1=1 2=36864
+Reshape                  Reshape_584              1 1 x.36 x.362 0=96 1=56 2=56
+Permute                  Transpose_96             1 1 x.362 x0.11 0=4
+BinaryOp                 Add_97                   2 1 onnx::Conv_270_splitncnn_0 x0.11 onnx::ReduceMean_300
+Permute                  Transpose_15             1 1 onnx::ReduceMean_300 onnx::ReduceMean_3002 0=3
+LayerNorm                Add_108                  1 1 onnx::ReduceMean_3002 onnx::Conv_319 0=96 1=1.000000e-06
+Permute                  Transpose_40             1 1 onnx::Conv_319 onnx::Conv_3192 0=4
+Convolution              Conv_109                 1 1 onnx::Conv_3192 input.23 0=192 1=2 3=2 5=1 6=73728
+Split                    splitncnn_6              1 2 input.23 input.23_splitncnn_0 input.23_splitncnn_1
+ConvolutionDepthWise     Conv_110                 1 1 input.23_splitncnn_1 x.44 0=192 1=7 4=3 5=1 6=9408 7=192
+Permute                  Transpose_111            1 1 x.44 input.27 0=3
+Reshape                  Reshape_584              1 1 input.27 input.272 0=192 1=-1
+LayerNorm                Add_122                  1 1 input.272 input0.11 0=192 1=1.000000e-06
+InnerProduct             MatMul_123               1 1 input0.11 input.31 0=768 1=1 2=147456
+GELU                     gelu_0                   1 1 input.31 onnx::MatMul_344 0=1
+InnerProduct             MatMul_133               1 1 onnx::MatMul_344 x.52 0=192 1=1 2=147456
+Reshape                  Reshape_584              1 1 x.52 x.522 0=192 1=28 2=28
+Permute                  Transpose_136            1 1 x.522 x0.15 0=4
+BinaryOp                 Add_137                  2 1 input.23_splitncnn_0 x0.15 onnx::Conv_350
+Split                    splitncnn_8              1 2 onnx::Conv_350 onnx::Conv_350_splitncnn_0 onnx::Conv_350_splitncnn_1
+ConvolutionDepthWise     Conv_138                 1 1 onnx::Conv_350_splitncnn_1 x.56 0=192 1=7 4=3 5=1 6=9408 7=192
+Permute                  Transpose_139            1 1 x.56 input.35 0=3
+Reshape                  Reshape_584              1 1 input.35 input.352 0=192 1=-1
+LayerNorm                Add_150                  1 1 input.352 input0.15 0=192 1=1.000000e-06
+InnerProduct             MatMul_151               1 1 input0.15 input.39 0=768 1=1 2=147456
+GELU                     gelu_0                   1 1 input.39 onnx::MatMul_374 0=1
+InnerProduct             MatMul_161               1 1 onnx::MatMul_374 x.64 0=192 1=1 2=147456
+Reshape                  Reshape_584              1 1 x.64 x.642 0=192 1=28 2=28
+Permute                  Transpose_164            1 1 x.642 x0.19 0=4
+BinaryOp                 Add_165                  2 1 onnx::Conv_350_splitncnn_0 x0.19 onnx::Conv_380
+Split                    splitncnn_10             1 2 onnx::Conv_380 onnx::Conv_380_splitncnn_0 onnx::Conv_380_splitncnn_1
+ConvolutionDepthWise     Conv_166                 1 1 onnx::Conv_380_splitncnn_1 x.68 0=192 1=7 4=3 5=1 6=9408 7=192
+Permute                  Transpose_167            1 1 x.68 input.43 0=3
+Reshape                  Reshape_584              1 1 input.43 input.432 0=192 1=-1
+LayerNorm                Add_178                  1 1 input.432 input0.19 0=192 1=1.000000e-06
+InnerProduct             MatMul_179               1 1 input0.19 input.47 0=768 1=1 2=147456
+GELU                     gelu_0                   1 1 input.47 onnx::MatMul_404 0=1
+InnerProduct             MatMul_189               1 1 onnx::MatMul_404 x.76 0=192 1=1 2=147456
+Reshape                  Reshape_584              1 1 x.76 x.762 0=192 1=28 2=28
+Permute                  Transpose_192            1 1 x.762 x0.23 0=4
+BinaryOp                 Add_193                  2 1 onnx::Conv_380_splitncnn_0 x0.23 onnx::ReduceMean_410
+Permute                  Transpose_15             1 1 onnx::ReduceMean_410 onnx::ReduceMean_4102 0=3
+LayerNorm                Add_204                  1 1 onnx::ReduceMean_4102 onnx::Conv_429 0=192 1=1.000000e-06
+Permute                  Transpose_40             1 1 onnx::Conv_429 onnx::Conv_4292 0=4
+Convolution              Conv_205                 1 1 onnx::Conv_4292 input.51 0=384 1=2 3=2 5=1 6=294912
+Split                    splitncnn_12             1 2 input.51 input.51_splitncnn_0 input.51_splitncnn_1
+ConvolutionDepthWise     Conv_206                 1 1 input.51_splitncnn_1 x.84 0=384 1=7 4=3 5=1 6=18816 7=384
+Permute                  Transpose_207            1 1 x.84 input.55 0=3
+Reshape                  Reshape_584              1 1 input.55 input.552 0=384 1=-1
+LayerNorm                Add_218                  1 1 input.552 input0.23 0=384 1=1.000000e-06
+InnerProduct             MatMul_219               1 1 input0.23 input.59 0=1536 1=1 2=589824
+GELU                     gelu_0                   1 1 input.59 onnx::MatMul_454 0=1
+InnerProduct             MatMul_229               1 1 onnx::MatMul_454 x.92 0=384 1=1 2=589824
+Reshape                  Reshape_584              1 1 x.92 x.922 0=384 1=14 2=14
+Permute                  Transpose_232            1 1 x.922 x0.27 0=4
+BinaryOp                 Add_233                  2 1 input.51_splitncnn_0 x0.27 onnx::Conv_460
+Split                    splitncnn_14             1 2 onnx::Conv_460 onnx::Conv_460_splitncnn_0 onnx::Conv_460_splitncnn_1
+ConvolutionDepthWise     Conv_234                 1 1 onnx::Conv_460_splitncnn_1 x.96 0=384 1=7 4=3 5=1 6=18816 7=384
+Permute                  Transpose_235            1 1 x.96 input.63 0=3
+Reshape                  Reshape_584              1 1 input.63 input.632 0=384 1=-1
+LayerNorm                Add_246                  1 1 input.632 input0.27 0=384 1=1.000000e-06
+InnerProduct             MatMul_247               1 1 input0.27 input.67 0=1536 1=1 2=589824
+GELU                     gelu_0                   1 1 input.67 onnx::MatMul_484 0=1
+InnerProduct             MatMul_257               1 1 onnx::MatMul_484 x.104 0=384 1=1 2=589824
+Reshape                  Reshape_584              1 1 x.104 x.1042 0=384 1=14 2=14
+Permute                  Transpose_260            1 1 x.1042 x0.31 0=4
+BinaryOp                 Add_261                  2 1 onnx::Conv_460_splitncnn_0 x0.31 onnx::Conv_490
+Split                    splitncnn_16             1 2 onnx::Conv_490 onnx::Conv_490_splitncnn_0 onnx::Conv_490_splitncnn_1
+ConvolutionDepthWise     Conv_262                 1 1 onnx::Conv_490_splitncnn_1 x.108 0=384 1=7 4=3 5=1 6=18816 7=384
+Permute                  Transpose_263            1 1 x.108 input.71 0=3
+Reshape                  Reshape_584              1 1 input.71 input.712 0=384 1=-1
+LayerNorm                Add_274                  1 1 input.712 input0.31 0=384 1=1.000000e-06
+InnerProduct             MatMul_275               1 1 input0.31 input.75 0=1536 1=1 2=589824
+GELU                     gelu_0                   1 1 input.75 onnx::MatMul_514 0=1
+InnerProduct             MatMul_285               1 1 onnx::MatMul_514 x.116 0=384 1=1 2=589824
+Reshape                  Reshape_584              1 1 x.116 x.1162 0=384 1=14 2=14
+Permute                  Transpose_288            1 1 x.1162 x0.35 0=4
+BinaryOp                 Add_289                  2 1 onnx::Conv_490_splitncnn_0 x0.35 onnx::Conv_520
+Split                    splitncnn_18             1 2 onnx::Conv_520 onnx::Conv_520_splitncnn_0 onnx::Conv_520_splitncnn_1
+ConvolutionDepthWise     Conv_290                 1 1 onnx::Conv_520_splitncnn_1 x.120 0=384 1=7 4=3 5=1 6=18816 7=384
+Permute                  Transpose_291            1 1 x.120 input.79 0=3
+Reshape                  Reshape_584              1 1 input.79 input.792 0=384 1=-1
+LayerNorm                Add_302                  1 1 input.792 input0.35 0=384 1=1.000000e-06
+InnerProduct             MatMul_303               1 1 input0.35 input.83 0=1536 1=1 2=589824
+GELU                     gelu_0                   1 1 input.83 onnx::MatMul_544 0=1
+InnerProduct             MatMul_313               1 1 onnx::MatMul_544 x.128 0=384 1=1 2=589824
+Reshape                  Reshape_584              1 1 x.128 x.1282 0=384 1=14 2=14
+Permute                  Transpose_316            1 1 x.1282 x0.39 0=4
+BinaryOp                 Add_317                  2 1 onnx::Conv_520_splitncnn_0 x0.39 onnx::Conv_550
+Split                    splitncnn_20             1 2 onnx::Conv_550 onnx::Conv_550_splitncnn_0 onnx::Conv_550_splitncnn_1
+ConvolutionDepthWise     Conv_318                 1 1 onnx::Conv_550_splitncnn_1 x.132 0=384 1=7 4=3 5=1 6=18816 7=384
+Permute                  Transpose_319            1 1 x.132 input.87 0=3
+Reshape                  Reshape_584              1 1 input.87 input.872 0=384 1=-1
+LayerNorm                Add_330                  1 1 input.872 input0.39 0=384 1=1.000000e-06
+InnerProduct             MatMul_331               1 1 input0.39 input.91 0=1536 1=1 2=589824
+GELU                     gelu_0                   1 1 input.91 onnx::MatMul_574 0=1
+InnerProduct             MatMul_341               1 1 onnx::MatMul_574 x.140 0=384 1=1 2=589824
+Reshape                  Reshape_584              1 1 x.140 x.1402 0=384 1=14 2=14
+Permute                  Transpose_344            1 1 x.1402 x0.43 0=4
+BinaryOp                 Add_345                  2 1 onnx::Conv_550_splitncnn_0 x0.43 onnx::Conv_580
+Split                    splitncnn_22             1 2 onnx::Conv_580 onnx::Conv_580_splitncnn_0 onnx::Conv_580_splitncnn_1
+ConvolutionDepthWise     Conv_346                 1 1 onnx::Conv_580_splitncnn_1 x.144 0=384 1=7 4=3 5=1 6=18816 7=384
+Permute                  Transpose_347            1 1 x.144 input.95 0=3
+Reshape                  Reshape_584              1 1 input.95 input.952 0=384 1=-1
+LayerNorm                Add_358                  1 1 input.952 input0.43 0=384 1=1.000000e-06
+InnerProduct             MatMul_359               1 1 input0.43 input.99 0=1536 1=1 2=589824
+GELU                     gelu_0                   1 1 input.99 onnx::MatMul_604 0=1
+InnerProduct             MatMul_369               1 1 onnx::MatMul_604 x.152 0=384 1=1 2=589824
+Reshape                  Reshape_584              1 1 x.152 x.1522 0=384 1=14 2=14
+Permute                  Transpose_372            1 1 x.1522 x0.47 0=4
+BinaryOp                 Add_373                  2 1 onnx::Conv_580_splitncnn_0 x0.47 onnx::Conv_610
+Split                    splitncnn_24             1 2 onnx::Conv_610 onnx::Conv_610_splitncnn_0 onnx::Conv_610_splitncnn_1
+ConvolutionDepthWise     Conv_374                 1 1 onnx::Conv_610_splitncnn_1 x.156 0=384 1=7 4=3 5=1 6=18816 7=384
+Permute                  Transpose_375            1 1 x.156 input.103 0=3
+Reshape                  Reshape_584              1 1 input.103 input.1032 0=384 1=-1
+LayerNorm                Add_386                  1 1 input.1032 input0.47 0=384 1=1.000000e-06
+InnerProduct             MatMul_387               1 1 input0.47 input.107 0=1536 1=1 2=589824
+GELU                     gelu_0                   1 1 input.107 onnx::MatMul_634 0=1
+InnerProduct             MatMul_397               1 1 onnx::MatMul_634 x.164 0=384 1=1 2=589824
+Reshape                  Reshape_584              1 1 x.164 x.1642 0=384 1=14 2=14
+Permute                  Transpose_400            1 1 x.1642 x0.51 0=4
+BinaryOp                 Add_401                  2 1 onnx::Conv_610_splitncnn_0 x0.51 onnx::Conv_640
+Split                    splitncnn_26             1 2 onnx::Conv_640 onnx::Conv_640_splitncnn_0 onnx::Conv_640_splitncnn_1
+ConvolutionDepthWise     Conv_402                 1 1 onnx::Conv_640_splitncnn_1 x.168 0=384 1=7 4=3 5=1 6=18816 7=384
+Permute                  Transpose_403            1 1 x.168 input.111 0=3
+Reshape                  Reshape_584              1 1 input.111 input.1112 0=384 1=-1
+LayerNorm                Add_414                  1 1 input.1112 input0.51 0=384 1=1.000000e-06
+InnerProduct             MatMul_415               1 1 input0.51 input.115 0=1536 1=1 2=589824
+GELU                     gelu_0                   1 1 input.115 onnx::MatMul_664 0=1
+InnerProduct             MatMul_425               1 1 onnx::MatMul_664 x.176 0=384 1=1 2=589824
+Reshape                  Reshape_584              1 1 x.176 x.1762 0=384 1=14 2=14
+Permute                  Transpose_428            1 1 x.1762 x0.55 0=4
+BinaryOp                 Add_429                  2 1 onnx::Conv_640_splitncnn_0 x0.55 onnx::Conv_670
+Split                    splitncnn_28             1 2 onnx::Conv_670 onnx::Conv_670_splitncnn_0 onnx::Conv_670_splitncnn_1
+ConvolutionDepthWise     Conv_430                 1 1 onnx::Conv_670_splitncnn_1 x.180 0=384 1=7 4=3 5=1 6=18816 7=384
+Permute                  Transpose_431            1 1 x.180 input.119 0=3
+Reshape                  Reshape_584              1 1 input.119 input.1192 0=384 1=-1
+LayerNorm                Add_442                  1 1 input.1192 input0.55 0=384 1=1.000000e-06
+InnerProduct             MatMul_443               1 1 input0.55 input.123 0=1536 1=1 2=589824
+GELU                     gelu_0                   1 1 input.123 onnx::MatMul_694 0=1
+InnerProduct             MatMul_453               1 1 onnx::MatMul_694 x.188 0=384 1=1 2=589824
+Reshape                  Reshape_584              1 1 x.188 x.1882 0=384 1=14 2=14
+Permute                  Transpose_456            1 1 x.1882 x0.59 0=4
+BinaryOp                 Add_457                  2 1 onnx::Conv_670_splitncnn_0 x0.59 onnx::ReduceMean_700
+Split                    splitncnn_30             1 2 onnx::ReduceMean_700 onnx::ReduceMean_700_splitncnn_0 onnx::ReduceMean_700_splitncnn_1
+Reduction                ReduceMean_458           1 1 onnx::ReduceMean_700_splitncnn_1 input1 0=3 1=0 -23303=2,-2,-1 5=1
+LayerNorm                Add_469                  1 1 input1 onnx::Concat_712 0=384 1=1.000000e-06
+Permute                  Transpose_15             1 1 onnx::ReduceMean_700_splitncnn_0 onnx::ReduceMean_700_splitncnn_02 0=3
+LayerNorm                Add_480                  1 1 onnx::ReduceMean_700_splitncnn_02 onnx::Conv_731 0=384 1=1.000000e-06
+Permute                  Transpose_40             1 1 onnx::Conv_731 onnx::Conv_7312 0=4
+Convolution              Conv_481                 1 1 onnx::Conv_7312 input.127 0=768 1=2 3=2 5=1 6=1179648
+Split                    splitncnn_31             1 2 input.127 input.127_splitncnn_0 input.127_splitncnn_1
+ConvolutionDepthWise     Conv_482                 1 1 input.127_splitncnn_1 x.196 0=768 1=7 4=3 5=1 6=37632 7=768
+Permute                  Transpose_483            1 1 x.196 input.131 0=3
+Reshape                  Reshape_584              1 1 input.131 input.1312 0=768 1=-1
+LayerNorm                Add_494                  1 1 input.1312 input0.59 0=768 1=1.000000e-06
+InnerProduct             MatMul_495               1 1 input0.59 input.135 0=3072 1=1 2=2359296
+GELU                     gelu_0                   1 1 input.135 onnx::MatMul_756 0=1
+InnerProduct             MatMul_505               1 1 onnx::MatMul_756 x.204 0=768 1=1 2=2359296
+Reshape                  Reshape_584              1 1 x.204 x.2042 0=768 1=7 2=7
+Permute                  Transpose_508            1 1 x.2042 x0.63 0=4
+BinaryOp                 Add_509                  2 1 input.127_splitncnn_0 x0.63 onnx::Conv_762
+Split                    splitncnn_33             1 2 onnx::Conv_762 onnx::Conv_762_splitncnn_0 onnx::Conv_762_splitncnn_1
+ConvolutionDepthWise     Conv_510                 1 1 onnx::Conv_762_splitncnn_1 x.208 0=768 1=7 4=3 5=1 6=37632 7=768
+Permute                  Transpose_511            1 1 x.208 input.139 0=3
+Reshape                  Reshape_584              1 1 input.139 input.1392 0=768 1=-1
+LayerNorm                Add_522                  1 1 input.1392 input0.63 0=768 1=1.000000e-06
+InnerProduct             MatMul_523               1 1 input0.63 input.143 0=3072 1=1 2=2359296
+GELU                     gelu_0                   1 1 input.143 onnx::MatMul_786 0=1
+InnerProduct             MatMul_533               1 1 onnx::MatMul_786 x.216 0=768 1=1 2=2359296
+Reshape                  Reshape_584              1 1 x.216 x.2162 0=768 1=7 2=7
+Permute                  Transpose_536            1 1 x.2162 x0.67 0=4
+BinaryOp                 Add_537                  2 1 onnx::Conv_762_splitncnn_0 x0.67 onnx::Conv_792
+Split                    splitncnn_35             1 2 onnx::Conv_792 onnx::Conv_792_splitncnn_0 onnx::Conv_792_splitncnn_1
+ConvolutionDepthWise     Conv_538                 1 1 onnx::Conv_792_splitncnn_1 x.220 0=768 1=7 4=3 5=1 6=37632 7=768
+Permute                  Transpose_539            1 1 x.220 input.147 0=3
+Reshape                  Reshape_584              1 1 input.147 input.1472 0=768 1=-1
+LayerNorm                Add_550                  1 1 input.1472 input0.67 0=768 1=1.000000e-06
+InnerProduct             MatMul_551               1 1 input0.67 input.151 0=3072 1=1 2=2359296
+GELU                     gelu_0                   1 1 input.151 onnx::MatMul_816 0=1
+InnerProduct             MatMul_561               1 1 onnx::MatMul_816 x.228 0=768 1=1 2=2359296
+Reshape                  Reshape_584              1 1 x.228 x.2282 0=768 1=7 2=7
+Permute                  Transpose_564            1 1 x.2282 x0.71 0=4
+BinaryOp                 Add_565                  2 1 onnx::Conv_792_splitncnn_0 x0.71 onnx::ReduceMean_822
+Reduction                ReduceMean_566           1 1 onnx::ReduceMean_822 input2 0=3 1=0 -23303=2,-2,-1 5=1
+LayerNorm                Add_577                  1 1 input2 input0.71 0=768 1=1.000000e-06
+Split                    splitncnn_37             1 3 input0.71 input0.71_splitncnn_0 input0.71_splitncnn_1 input0.71_splitncnn_2
+InnerProduct             Gemm_578                 1 1 input0.71_splitncnn_2 output 0=214 1=1 2=164352
+InnerProduct             Gemm_580                 1 1 input0.71_splitncnn_1 lmk 0=262 1=1 2=201216
+Concat                   Concat_582               2 1 onnx::Concat_712 input0.71_splitncnn_0 input3
+InnerProduct             Gemm_583                 1 1 input3 out 0=406 1=1 2=467712
