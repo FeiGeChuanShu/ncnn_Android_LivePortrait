@@ -2,7 +2,7 @@
 a naive example of LivePortrait infer by ncnn
 
 ## Run mode :  
-1.Retargeting  
+1.Retargeting(lip open/eye open/head pose editing)  
 2.Source image driving by video/images  
 
 PS: infer time: 28s/driving image

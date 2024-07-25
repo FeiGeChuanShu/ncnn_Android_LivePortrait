@@ -7,6 +7,9 @@
 typedef struct _pipeline_config{
     float lip_close_ratio;
     float eye_close_ratio;
+    float head_pitch_variation;
+    float head_yaw_variation;
+    float head_roll_variation;
     int mode;
     std::string mask_template_path;
     std::string source_path;

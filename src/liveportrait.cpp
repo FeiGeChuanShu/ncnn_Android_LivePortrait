@@ -100,6 +100,7 @@ LivePortrait::~LivePortrait(){
     stitching_retargeting_eye_.clear();
     spade_generator_module_.clear();
     warping_module2_.clear();
+    
 }
 int LivePortrait::load_model(const char* model_path)
 {
@@ -109,9 +110,9 @@ int LivePortrait::load_model(const char* model_path)
         model_dir += "/";
     } 
 
-	warp_module_.register_custom_layer("GridSampleN", GridSampleN_layer_creator);
-	warp_module_.load_param((model_dir + "warp.param").c_str());
-	warp_module_.load_model((model_dir + "warp.bin").c_str());
+    warp_module_.register_custom_layer("GridSampleN", GridSampleN_layer_creator);
+    warp_module_.load_param((model_dir + "warp.param").c_str());
+    warp_module_.load_model((model_dir + "warp.bin").c_str());
     
     motion_extrator_module_.load_param((model_dir + "motion_extractor.ncnn.param").c_str());
     motion_extrator_module_.load_model((model_dir + "motion_extractor.ncnn.bin").c_str());
@@ -138,7 +139,8 @@ int LivePortrait::load_model(const char* model_path)
     return 0;
 }
 int LivePortrait::prepare_retargeting(const cv::Mat& img, const cv::Mat& mask_crop, ret_dct_t& crop_info, 
-    ncnn::Mat& f_s, std::vector<cv::Point3f>& x_s, cv::Mat& R_s, kp_info_t& x_s_info, cv::Mat& mask_ori){
+    ncnn::Mat& f_s, std::vector<cv::Point3f>& x_s, cv::Mat& R_s, cv::Mat& R_d, kp_info_t& x_s_info, 
+    cv::Mat& mask_ori, float head_pitch_ratio, float head_yaw_ratio, float head_roll_ratio){
     cv::Mat src;
     cv::cvtColor(img, src, cv::COLOR_BGR2RGB);
 
@@ -147,7 +149,13 @@ int LivePortrait::prepare_retargeting(const cv::Mat& img, const cv::Mat& mask_cr
 
     get_kp_info(crop_info.img_crop_256, x_s_info);
 
+    //headpose
+    float x_s_info_user_pitch = x_s_info.pitch +  head_pitch_ratio;
+    float x_s_info_user_yaw = x_s_info.yaw +  head_yaw_ratio;
+    float x_s_info_user_roll = x_s_info.roll +  head_roll_ratio;
+
     R_s = get_rotation_matrix(x_s_info.pitch, x_s_info.yaw, x_s_info.roll);
+    R_d = get_rotation_matrix(x_s_info_user_pitch, x_s_info_user_yaw, x_s_info_user_roll);
     
     extract_feature_3d(crop_info.img_crop_256, f_s);
 
@@ -158,9 +166,28 @@ int LivePortrait::prepare_retargeting(const cv::Mat& img, const cv::Mat& mask_cr
     return 0;
 }
 int LivePortrait::run_single_iamge(const cv::Mat& source, const cv::Mat& mask_crop, 
-    cv::Mat& out, float lip_close_ratio, float eye_close_ratio){
-    prepare_retargeting(source, mask_crop, crop_info_, f_s_, x_s_,R_s_,x_s_info_, mask_ori_);
+    cv::Mat& out, float lip_close_ratio, float eye_close_ratio, float head_pitch_ratio,
+    float head_yaw_ratio, float head_roll_ratio){
+
+    prepare_retargeting(source, mask_crop, crop_info_, f_s_, x_s_, R_s_, R_d_, x_s_info_, mask_ori_,
+        head_pitch_ratio, head_yaw_ratio, head_roll_ratio);
     fprintf(stderr, "prepare retargeting done\n");
+
+    cv::Mat R_d_new = (R_d_ * R_s_.t()) * R_s_;
+
+    std::vector<cv::Point3f> x_d_new;
+    for (size_t j = 0; j < x_s_info_.kp.size(); ++j) {
+        float x = (x_s_info_.kp[j].x * R_d_new.at<float>(0, 0) +
+            x_s_info_.kp[j].y * R_d_new.at<float>(1, 0) + 
+            x_s_info_.kp[j].z * R_d_new.at<float>(2, 0) + x_s_info_.exp[j].x) * x_s_info_.scale + x_s_info_.t[0];
+        float y = (x_s_info_.kp[j].x * R_d_new.at<float>(0, 1) +
+            x_s_info_.kp[j].y * R_d_new.at<float>(1, 1) +
+            x_s_info_.kp[j].z * R_d_new.at<float>(2, 1) + x_s_info_.exp[j].y) * x_s_info_.scale + x_s_info_.t[1];
+        float z = (x_s_info_.kp[j].x * R_d_new.at<float>(0, 2) +
+            x_s_info_.kp[j].y * R_d_new.at<float>(1, 2) +
+            x_s_info_.kp[j].z * R_d_new.at<float>(2, 2) + x_s_info_.exp[j].z) * x_s_info_.scale + x_s_info_.t[2];
+        x_d_new.emplace_back(x, y, z);
+    }
 
     ncnn::Mat mesh;
     make_coordinate_grid(16, 64, 64, mesh);
@@ -178,12 +205,14 @@ int LivePortrait::run_single_iamge(const cv::Mat& source, const cv::Mat& mask_cr
     fprintf(stderr, "retarget eye done\n");
     
     std::vector<cv::Point3f> x_d_i_new(x_s_.size());
-    for(size_t i = 0; i < x_s_.size(); ++i){
-        x_d_i_new[i] = x_s_[i] + lip_delta_before_animation[i] + eye_delta_before_animation[i];
+    for(size_t i = 0; i < x_d_new.size(); ++i){
+        x_d_i_new[i] = x_d_new[i] + lip_delta_before_animation[i] + eye_delta_before_animation[i];
     }
+    std::vector<cv::Point3f> kp_driving;
+    stitching(x_s_, x_d_i_new, kp_driving);
 
     cv::Mat I_p_i;
-    warp_decode(f_s_, x_s_, x_d_i_new, mesh, I_p_i);
+    warp_decode(f_s_, x_s_, kp_driving, mesh, I_p_i);
     fprintf(stderr, "warp done\n");
     
     //cv::Mat I_p_pstbk;
@@ -212,7 +241,7 @@ int LivePortrait::prepare_driving(const std::vector<cv::Mat>& driving_rgb_lst,
 
 int LivePortrait::run_multi_image(const cv::Mat& source, const cv::Mat& mask_crop, 
     const std::vector<cv::Mat>& driving_rgb_lst, const std::string& save_path){
-    prepare_retargeting(source, mask_crop, crop_info_, f_s_, x_s_, R_s_, x_s_info_, mask_ori_);
+    prepare_retargeting(source, mask_crop, crop_info_, f_s_, x_s_, R_s_, R_d_, x_s_info_, mask_ori_);
     fprintf(stderr, "prepare retargeting done\n");
 
     std::vector<template_dct_t> template_dct_lst;
@@ -441,16 +470,16 @@ int LivePortrait::warping_motion(ncnn::Mat& feat, ncnn::Mat& kp_driving,
     ncnn::Mat& kp_source, ncnn::Mat& mesh, ncnn::Mat& out){
     ncnn::Extractor ex = warp_module_.create_extractor();
 
-	ncnn::Mat zeros(64 * 64, 16, 1);
-	zeros.fill(0.f);
+    ncnn::Mat zeros(64 * 64, 16, 1);
+    zeros.fill(0.f);
 
-	ex.input("zeros", zeros);
-	ex.input("feat", feat);
-	ex.input("mesh", mesh);
-	ex.input("kp_driving", kp_driving);
-	ex.input("kp_source", kp_source);
+    ex.input("zeros", zeros);
+    ex.input("feat", feat);
+    ex.input("mesh", mesh);
+    ex.input("kp_driving", kp_driving);
+    ex.input("kp_source", kp_source);
 
-	ex.extract("out0", out);
+    ex.extract("out0", out);
 
     return 0;
 }

@@ -12,12 +12,14 @@ public:
     ~LivePortrait();
     int load_model(const char* model_path);
     int run_single_iamge(const cv::Mat& source, const cv::Mat& mask_crop, cv::Mat& out, 
-        float lip_close_ratio = 0.5f, float eye_close_ratio = 0.5f);
+        float lip_close_ratio = 0.5f, float eye_close_ratio = 0.5f, float head_pitch_ratio = 0.f,
+        float head_yaw_ratio = 0.f, float head_roll_ratio = 0.f);
     int run_multi_image(const cv::Mat& source, const cv::Mat& mask_crop, const std::vector<cv::Mat>& driving_rgb_lst, const std::string& save_path);
 private:
     int prepare_driving(const std::vector<cv::Mat>& driving_rgb_lst, std::vector<template_dct_t>& template_dct_lst);
     int prepare_retargeting(const cv::Mat& img, const cv::Mat& mask_crop, ret_dct_t& crop_info, 
-        ncnn::Mat& f_s, std::vector<cv::Point3f>& x_s,  cv::Mat& R_s, kp_info_t& x_s_info, cv::Mat& mask_ori);
+        ncnn::Mat& f_s, std::vector<cv::Point3f>& x_s,  cv::Mat& R_s, cv::Mat& R_d, kp_info_t& x_s_info, cv::Mat& mask_ori,
+        float head_pitch_ratio = 0.f, float head_yaw_ratio = 0.f, float head_roll_ratio = 0.f);
     int crop_image(const cv::Mat& img, const std::vector<cv::Point2f>& pts, ret_dct_t& ret_dct, int dsize, float scale, float vx_ratio, float vy_ratio);
     void crop_source_image(const cv::Mat& img, crop_cfg_t& crop_cfg, ret_dct_t& crop_info);
     void get_kp_info(const cv::Mat& img, kp_info_t& kp_info);
@@ -42,6 +44,7 @@ private:
 private:
     kp_info_t x_s_info_;
     cv::Mat R_s_;
+    cv::Mat R_d_;
     ret_dct_t crop_info_;
     ncnn::Mat f_s_;
     cv::Mat mask_ori_;
