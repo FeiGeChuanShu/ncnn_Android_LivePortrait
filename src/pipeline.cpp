@@ -86,9 +86,7 @@ int Pipeline::run(pipeline_config_t& pipe_config)
     int ret = 0;
     if (pipe_config.mode == 0) {
         cv::Mat out;
-        ret = liveportrait_->run_single_iamge(source, mask, out, pipe_config.lip_close_ratio, 
-            pipe_config.eye_close_ratio, pipe_config.head_pitch_variation, pipe_config.head_yaw_variation,
-            pipe_config.head_roll_variation);
+        ret = liveportrait_->run_single_iamge(source, mask, out, pipe_config.retargeting_info);
         if(ret < 0)
             return -1;
         cv::imwrite(pipe_config.save_path + "/retargeting.jpg", out);

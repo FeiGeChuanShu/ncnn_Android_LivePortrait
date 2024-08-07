@@ -120,6 +120,14 @@ int make_coordinate_grid(int d, int h, int w, ncnn::Mat& mesh) {
                 y_ptr[j] = 2.f * (float)k / ((float)h - 1.f) - 1.f;
             }
         }
+
+        // for (int j = 0; j < w; j++){
+        //     for (int k = 0; k < h; k++)
+        //     {
+        //         float* ptr = yy.channel(i).row(k);
+        //         ptr[j] = 2.f * (float)k / ((float)h - 1.f) - 1.f;
+        //     }
+        // }
         zz.channel(i).fill(2.f * (float)i / ((float)d - 1.f) - 1.f);
     }
 
@@ -250,11 +258,11 @@ void transform_pts(const std::vector<cv::Point2f>& pts, std::vector<cv::Point2f>
 }
 void transform_img(const cv::Mat& img, cv::Mat& out, const cv::Mat& M, int dsize_h, int dsize_w) {
 
-    cv::warpPerspective(img, out, M, cv::Size(dsize_w, dsize_h));
+    cv::warpPerspective(img, out, M, cv::Size(dsize_w, dsize_h), cv::INTER_CUBIC);
 }
 void transform_img(const cv::Mat& img, cv::Mat& out, const cv::Mat& M, int dsize) {
 
-    cv::warpPerspective(img, out, M, cv::Size(dsize, dsize) );
+    cv::warpPerspective(img, out, M, cv::Size(dsize, dsize), cv::INTER_CUBIC);
 }
 
 cv::Mat get_rotation_matrix(float pitch_, float yaw_, float roll_) {

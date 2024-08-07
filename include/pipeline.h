@@ -1,15 +1,10 @@
 #ifndef PIPELINE_H_
 #define PIPELINE_H_
 #include <memory>
-#include "pipeline.h"
 #include "liveportrait.h"
 
 typedef struct _pipeline_config{
-    float lip_close_ratio;
-    float eye_close_ratio;
-    float head_pitch_variation;
-    float head_yaw_variation;
-    float head_roll_variation;
+    retargeting_info_t retargeting_info;
     int mode;
     std::string mask_template_path;
     std::string source_path;

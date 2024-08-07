@@ -149,13 +149,13 @@ int LivePortrait::prepare_retargeting(const cv::Mat& img, const cv::Mat& mask_cr
 
     get_kp_info(crop_info.img_crop_256, x_s_info);
 
-    //headpose
-    float x_s_info_user_pitch = x_s_info.pitch +  head_pitch_ratio;
-    float x_s_info_user_yaw = x_s_info.yaw +  head_yaw_ratio;
-    float x_s_info_user_roll = x_s_info.roll +  head_roll_ratio;
+    //fprintf(stderr, "pose: %f,%f,%f\n", x_s_info.pitch,x_s_info.yaw,x_s_info.roll);
+    float x_d_info_user_pitch = x_s_info.pitch +  head_pitch_ratio;
+    float x_d_info_user_yaw = x_s_info.yaw +  head_yaw_ratio;
+    float x_d_info_user_roll = x_s_info.roll +  head_roll_ratio;
 
     R_s = get_rotation_matrix(x_s_info.pitch, x_s_info.yaw, x_s_info.roll);
-    R_d = get_rotation_matrix(x_s_info_user_pitch, x_s_info_user_yaw, x_s_info_user_roll);
+    R_d = get_rotation_matrix(x_d_info_user_pitch, x_d_info_user_yaw, x_d_info_user_roll);
     
     extract_feature_3d(crop_info.img_crop_256, f_s);
 
@@ -165,27 +165,52 @@ int LivePortrait::prepare_retargeting(const cv::Mat& img, const cv::Mat& mask_cr
     
     return 0;
 }
+
+
 int LivePortrait::run_single_iamge(const cv::Mat& source, const cv::Mat& mask_crop, 
-    cv::Mat& out, float lip_close_ratio, float eye_close_ratio, float head_pitch_ratio,
-    float head_yaw_ratio, float head_roll_ratio){
+    cv::Mat& out, retargeting_info_t& retargeting_Info){
 
     prepare_retargeting(source, mask_crop, crop_info_, f_s_, x_s_, R_s_, R_d_, x_s_info_, mask_ori_,
-        head_pitch_ratio, head_yaw_ratio, head_roll_ratio);
+        retargeting_Info.head_pitch_variation, retargeting_Info.head_yaw_variation, retargeting_Info.head_roll_variation);
     fprintf(stderr, "prepare retargeting done\n");
 
     cv::Mat R_d_new = (R_d_ * R_s_.t()) * R_s_;
+
+    if (retargeting_Info.eyeball_direction_x != 0 || retargeting_Info.eyeball_direction_y != 0)
+        update_delta_new_eyeball_direction(retargeting_Info.eyeball_direction_x, retargeting_Info.eyeball_direction_y, x_s_info_.exp);
+    if (retargeting_Info.smile != 0)
+        update_delta_new_smile(retargeting_Info.smile, x_s_info_.exp);
+    if (retargeting_Info.wink != 0)
+        update_delta_new_wink(retargeting_Info.wink, x_s_info_.exp);
+    if (retargeting_Info.eyebrow != 0)
+        update_delta_new_eyebrow(retargeting_Info.eyebrow, x_s_info_.exp);
+    if (retargeting_Info.lip_variation_zero != 0)
+        update_delta_new_lip_variation_zero(retargeting_Info.lip_variation_zero, x_s_info_.exp);
+    if (retargeting_Info.lip_variation_one !=  0)
+        update_delta_new_lip_variation_one(retargeting_Info.lip_variation_one, x_s_info_.exp);
+    if (retargeting_Info.lip_variation_two != 0)
+        update_delta_new_lip_variation_two(retargeting_Info.lip_variation_two, x_s_info_.exp);
+    if (retargeting_Info.lip_variation_three != 0)
+        update_delta_new_lip_variation_three(retargeting_Info.lip_variation_three, x_s_info_.exp);
+    if (retargeting_Info.mov_x != 0)
+        update_delta_new_mov_x(-retargeting_Info.mov_x, x_s_info_.exp);
+    if (retargeting_Info.mov_y != 0)
+        update_delta_new_mov_y(retargeting_Info.mov_y, x_s_info_.exp);
 
     std::vector<cv::Point3f> x_d_new;
     for (size_t j = 0; j < x_s_info_.kp.size(); ++j) {
         float x = (x_s_info_.kp[j].x * R_d_new.at<float>(0, 0) +
             x_s_info_.kp[j].y * R_d_new.at<float>(1, 0) + 
-            x_s_info_.kp[j].z * R_d_new.at<float>(2, 0) + x_s_info_.exp[j].x) * x_s_info_.scale + x_s_info_.t[0];
+            x_s_info_.kp[j].z * R_d_new.at<float>(2, 0) + x_s_info_.exp[j].x) * 
+            x_s_info_.scale * retargeting_Info.mov_z + x_s_info_.t[0];
         float y = (x_s_info_.kp[j].x * R_d_new.at<float>(0, 1) +
             x_s_info_.kp[j].y * R_d_new.at<float>(1, 1) +
-            x_s_info_.kp[j].z * R_d_new.at<float>(2, 1) + x_s_info_.exp[j].y) * x_s_info_.scale + x_s_info_.t[1];
+            x_s_info_.kp[j].z * R_d_new.at<float>(2, 1) + x_s_info_.exp[j].y) * 
+            x_s_info_.scale * retargeting_Info.mov_z + x_s_info_.t[1];
         float z = (x_s_info_.kp[j].x * R_d_new.at<float>(0, 2) +
             x_s_info_.kp[j].y * R_d_new.at<float>(1, 2) +
-            x_s_info_.kp[j].z * R_d_new.at<float>(2, 2) + x_s_info_.exp[j].z) * x_s_info_.scale + x_s_info_.t[2];
+            x_s_info_.kp[j].z * R_d_new.at<float>(2, 2) + x_s_info_.exp[j].z) * 
+            x_s_info_.scale * retargeting_Info.mov_z + x_s_info_.t[2];
         x_d_new.emplace_back(x, y, z);
     }
 
@@ -194,13 +219,13 @@ int LivePortrait::run_single_iamge(const cv::Mat& source, const cv::Mat& mask_cr
 
     std::vector<cv::Point3f> lip_delta_before_animation;
     std::vector<float> combined_lip_ratio_tensor;
-    calc_combined_lip_ratio(crop_info_.lmk_crop, combined_lip_ratio_tensor, lip_close_ratio);
+    calc_combined_lip_ratio(crop_info_.lmk_crop, combined_lip_ratio_tensor, retargeting_Info.lip_close_ratio);
     retarget_lip(x_s_, combined_lip_ratio_tensor, lip_delta_before_animation);
     fprintf(stderr, "retarget lip done\n");
 
     std::vector<cv::Point3f> eye_delta_before_animation;
     std::vector<float> combined_eye_ratio_tensor;
-    calc_combined_eye_ratio(crop_info_.lmk_crop, combined_eye_ratio_tensor, eye_close_ratio);
+    calc_combined_eye_ratio(crop_info_.lmk_crop, combined_eye_ratio_tensor, retargeting_Info.eye_close_ratio);
     retarget_eye(x_s_, combined_eye_ratio_tensor, eye_delta_before_animation);
     fprintf(stderr, "retarget eye done\n");
     
@@ -220,7 +245,6 @@ int LivePortrait::run_single_iamge(const cv::Mat& source, const cv::Mat& mask_cr
 
     return 0;
 }
-
 int LivePortrait::prepare_driving(const std::vector<cv::Mat>& driving_rgb_lst, 
     std::vector<template_dct_t>& template_dct_lst){
     std::vector<std::vector<cv::Point2f>> driving_lmk_crop_lst;
@@ -710,6 +734,74 @@ void LivePortrait::warp_decode(ncnn::Mat& feature_3d, std::vector<cv::Point3f>& 
 
     cv::Mat I_p_i(cv::Size(512, 512), CV_32FC3, (void*)out.data);
 
-    I_p_i *= 255;
-    I_p_i.convertTo(out_img, CV_8UC3, 1.f);
+    I_p_i.convertTo(out_img, CV_8UC3, 255.f);
+}
+void LivePortrait::update_delta_new_eyeball_direction(float eyeball_direction_x, float eyeball_direction_y, std::vector<cv::Point3f>& delta_new){
+    if(eyeball_direction_x > 0){
+        delta_new[11].x += eyeball_direction_x * 0.0007;
+        delta_new[15].x += eyeball_direction_x * 0.001;
+    }else{
+        delta_new[11].x += eyeball_direction_x * 0.001;
+        delta_new[15].x += eyeball_direction_x * 0.0007;
+    }
+    delta_new[11].y += eyeball_direction_y * -0.001;
+    delta_new[15].y += eyeball_direction_y * -0.001;
+    float blink = -eyeball_direction_y * 0.5;
+    delta_new[11].y += blink * -0.001;
+    delta_new[13].y += blink * 0.0003;
+    delta_new[15].y += blink * -0.001;
+    delta_new[16].y += blink * 0.0003;
+}
+void LivePortrait::update_delta_new_smile(float smile, std::vector<cv::Point3f>& delta_new){
+    delta_new[20].y += smile * -0.01;
+    delta_new[14].y += smile * -0.02;
+    delta_new[17].y += smile * 0.0065;
+    delta_new[17].z += smile * 0.003;
+    delta_new[13].y += smile * -0.00275;
+    delta_new[16].y += smile * -0.00275;
+    delta_new[3].y += smile * -0.0035;
+    delta_new[7].y += smile * -0.0035;
+}
+void LivePortrait::update_delta_new_wink(float wink, std::vector<cv::Point3f>& delta_new){
+    delta_new[11].y += wink * 0.001;
+    delta_new[13].y += wink * -0.0003;
+    delta_new[17].x += wink * 0.0003;
+    delta_new[17].y += wink * 0.0003;
+    delta_new[3].y += wink * -0.0003;
+}
+void LivePortrait::update_delta_new_eyebrow(float eyebrow, std::vector<cv::Point3f>& delta_new){
+    if(eyebrow > 0){
+        delta_new[1].y += eyebrow * 0.001;
+        delta_new[2].y += eyebrow * -0.001;
+    }else{
+        delta_new[1].x += eyebrow * -0.001;
+        delta_new[2].x += eyebrow * 0.001;
+        delta_new[1].y += eyebrow * 0.0003;
+        delta_new[2].y += eyebrow * -0.0003;
+    }
+}
+void LivePortrait::update_delta_new_lip_variation_zero(float lip_variation_zero, std::vector<cv::Point3f>& delta_new){
+    delta_new[19].x += lip_variation_zero;
+}
+void LivePortrait::update_delta_new_lip_variation_one(float lip_variation_one, std::vector<cv::Point3f>& delta_new){
+    delta_new[14].y += lip_variation_one * 0.001;
+    delta_new[3].y += lip_variation_one * -0.0005;
+    delta_new[7].y += lip_variation_one * -0.0005;
+    delta_new[17].z += lip_variation_one * -0.0005;
+}
+void LivePortrait::update_delta_new_lip_variation_two(float lip_variation_two, std::vector<cv::Point3f>& delta_new){
+    delta_new[20].z += lip_variation_two * -0.001;
+    delta_new[20].y += lip_variation_two * -0.001;
+    delta_new[14].y += lip_variation_two * -0.001;
+}
+void LivePortrait::update_delta_new_lip_variation_three(float lip_variation_three, std::vector<cv::Point3f>& delta_new){
+    delta_new[19].y += lip_variation_three * 0.001;
+    delta_new[19].z += lip_variation_three * 0.0001;
+    delta_new[17].y += lip_variation_three * -0.0001;
+}
+void LivePortrait::update_delta_new_mov_x(float mov_x, std::vector<cv::Point3f>& delta_new){
+    delta_new[5].x += mov_x;
+}
+void LivePortrait::update_delta_new_mov_y(float mov_y, std::vector<cv::Point3f>& delta_new){
+    delta_new[5].y += mov_y;
 }

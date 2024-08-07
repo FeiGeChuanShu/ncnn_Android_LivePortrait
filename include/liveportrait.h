@@ -11,15 +11,15 @@ public:
     LivePortrait() = default;
     ~LivePortrait();
     int load_model(const char* model_path);
-    int run_single_iamge(const cv::Mat& source, const cv::Mat& mask_crop, cv::Mat& out, 
-        float lip_close_ratio = 0.5f, float eye_close_ratio = 0.5f, float head_pitch_ratio = 0.f,
-        float head_yaw_ratio = 0.f, float head_roll_ratio = 0.f);
+
+    int run_single_iamge(const cv::Mat& source, const cv::Mat& mask_crop, cv::Mat& out, retargeting_info_t& retargeting_Info);
     int run_multi_image(const cv::Mat& source, const cv::Mat& mask_crop, const std::vector<cv::Mat>& driving_rgb_lst, const std::string& save_path);
 private:
     int prepare_driving(const std::vector<cv::Mat>& driving_rgb_lst, std::vector<template_dct_t>& template_dct_lst);
     int prepare_retargeting(const cv::Mat& img, const cv::Mat& mask_crop, ret_dct_t& crop_info, 
         ncnn::Mat& f_s, std::vector<cv::Point3f>& x_s,  cv::Mat& R_s, cv::Mat& R_d, kp_info_t& x_s_info, cv::Mat& mask_ori,
         float head_pitch_ratio = 0.f, float head_yaw_ratio = 0.f, float head_roll_ratio = 0.f);
+
     int crop_image(const cv::Mat& img, const std::vector<cv::Point2f>& pts, ret_dct_t& ret_dct, int dsize, float scale, float vx_ratio, float vy_ratio);
     void crop_source_image(const cv::Mat& img, crop_cfg_t& crop_cfg, ret_dct_t& crop_info);
     void get_kp_info(const cv::Mat& img, kp_info_t& kp_info);
@@ -41,6 +41,17 @@ private:
     int warping_motion(ncnn::Mat& feat, ncnn::Mat& kp_driving, ncnn::Mat& kp_source, ncnn::Mat& mesh, ncnn::Mat& out);
     void calc_combined_lip_ratio(std::vector<cv::Point2f>& source_lmk, std::vector<float>& combined_lip_ratio, float input_lip_ratio);
     void calc_combined_eye_ratio(std::vector<cv::Point2f>& source_lmk, std::vector<float>& combined_eye_ratio, float input_eye_ratio);
+private:
+    void update_delta_new_eyeball_direction(float eyeball_direction_x, float eyeball_direction_y, std::vector<cv::Point3f>& delta_new);
+    void update_delta_new_smile(float smile, std::vector<cv::Point3f>& delta_new);
+    void update_delta_new_wink(float wink, std::vector<cv::Point3f>& delta_new);
+    void update_delta_new_eyebrow(float eyebrow, std::vector<cv::Point3f>& delta_new);
+    void update_delta_new_lip_variation_zero(float lip_variation_zero, std::vector<cv::Point3f>& delta_new);
+    void update_delta_new_lip_variation_one(float lip_variation_one, std::vector<cv::Point3f>& delta_new);
+    void update_delta_new_lip_variation_two(float lip_variation_two, std::vector<cv::Point3f>& delta_new);
+    void update_delta_new_lip_variation_three(float lip_variation_three, std::vector<cv::Point3f>& delta_new);
+    void update_delta_new_mov_x(float mov_x, std::vector<cv::Point3f>& delta_new);
+    void update_delta_new_mov_y(float mov_y, std::vector<cv::Point3f>& delta_new);
 private:
     kp_info_t x_s_info_;
     cv::Mat R_s_;

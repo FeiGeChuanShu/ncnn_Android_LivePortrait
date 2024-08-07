@@ -1,5 +1,46 @@
 #include "net.h"
 #include <opencv2/opencv.hpp>
+
+typedef struct _retargeting_info{
+    float lip_close_ratio;
+    float eye_close_ratio;
+    float head_pitch_variation;
+    float head_yaw_variation;
+    float head_roll_variation;
+    float mov_x;
+    float mov_y;
+    float mov_z;
+    float lip_variation_zero;
+    float lip_variation_one;
+    float lip_variation_two;
+    float lip_variation_three;
+    float smile;
+    float wink;
+    float eyebrow;
+    float eyeball_direction_x;
+    float eyeball_direction_y;
+    _retargeting_info(){
+        this->eye_close_ratio = 0.35f;
+        this->lip_close_ratio = 0.f;
+        this->head_pitch_variation = -7.f; //[-15, 15]
+        this->head_yaw_variation = -0.4f; //[-25, 25]
+        this->head_roll_variation = 2.f; //[-15, 15]
+
+        this->mov_x = 0.f;
+        this->mov_y = 0.f;
+        this->mov_z = 1.f;
+        this->lip_variation_zero = 0.f;
+        this->lip_variation_one = 0.f;
+        this->lip_variation_two = 0.f;
+        this->lip_variation_three = 0.f;
+        this->smile = 0.f;
+        this->wink = 0.f;
+        this->eyebrow = 0.f;
+        this->eyeball_direction_x = 0.f;
+        this->eyeball_direction_y = 0.f;
+    }
+}retargeting_info_t;
+
 typedef struct _rect_info {
     cv::Point2f center;
     cv::Point2f size;
